@@ -87,16 +87,32 @@ StarLogo TNG (The Next Generation) was a project in programmable simulation mode
 
 \section{Why Build TaleBlazer Analytics?}
 
-The educational focus of the TaleBlazer project requires that the impact of TaleBlazer games on learning be measured. Game designers and educational researchers are supremely interested in seeing exactly how players play their game in order to draw conclusions as to the game's effectiveness. Existing solutions fail to provide useful analytics with a desirable level of privacy. To this end, it was necessary to build TaleBlazer Analytics to meet our requirements. 
+The educational focus of the TaleBlazer project requires that the impact of TaleBlazer games on learning be measured. Game designers and educational researchers are supremely interested in seeing exactly how players play their game in order to draw conclusions as to their games' effectiveness. Existing solutions fail to provide useful analytics with a desirable level of privacy. To this end, it was necessary to build TaleBlazer Analytics to meet our requirements. 
 
 \subsection{Purpose of Data Collection}
 
-Game designers and researchers are supremely interested in seeing exactly how players play their game. Furthermore, it is important to also measure the impact of the game's content after the gameplay session has ended. To this end, it is necessary to capture data that allows interested parties to determine the relations between TaleBlazer games and learning. 
+The overall purpose of collecting TaleBlazer gameplay metrics is to provide interested parties with information to make informed decisions regarding the effectiveness of their game, across different aspects. This data ranges from how players play the game to the distribution of devices being used. There are three main parties that are interested in this type of data: 
+	\begin{itemize}
+		\item Game designers
+		\item Educational researchers
+		\item TaleBlazer developers
+	\end{itemize}
 
-The user-generated nature of TaleBlazer games results in games that span a huge range of possibilities. As a result, TaleBlazer requires an analytics solution that is both \textit{flexible} and \textit{useful}: flexible in order to accomodate the range of possibilities, and useful in order to provide meaningful analytics.
+\paragraph{Game Designers}
+Game designers are primarily interested in seeing how players progress through the game and the choices they make along the way. Using this formation, a game designer can quickly determine problematic spots in the game. For example, players may stop playing after a particular point in the game because the instructions to proceed aren't clear or there is a possible bug in the designed behaviors. As a result, the game designer can improve the game to make it a better experience for the players.
+
+\paragraph{Educational researchers}
+
+Educational researchers are interested in seeing how a game's content affects a player in the short or long-term. The choices that a player makes during a session can inform the researcher as to the level of a player's knowledge or how the content affected the player's understanding of the topic at hand. Often, the gameplay metrics are paired with external data, such as post-gameplay questionnaires or interviews. For exampe, a researcher studying a game about the environment might look at if a player encountered an EPA agent in-game or how fast they completed the game to see if a player missed crucial information or may not have been paying attention.
+
+\paragraph{TaleBlazer developers}
+
+Game designers and researchers are supremely interested in seeing exactly how players play their game. Furthermore, it is important to also measure the impact of the game's content after the gameplay session has ended. To this end, it is necessary to capture data that allows interested parties to determine the relations between TaleBlazer games and learning. 
 
 
 \subsection{Existing Solutions}
+The user-generated nature of TaleBlazer games results in games that span a huge range of possibilities. As a result, TaleBlazer requires an analytics solution that is both \textit{flexible} and \textit{useful}: flexible in order to accomodate the range of possibilities, and useful in order to provide meaningful analytics.
+
 Existing solutions fail in two regards:
 	\begin{enumerate}
 		\item They fail to provide data analysis useful to TaleBlazer.
