@@ -6,6 +6,64 @@ This section details the background of the TaleBlazer project, including the sep
 
 TaleBlazer is an augmented reality location-based game platform developed at the MIT Scheller Teacher Education Program (STEP). TaleBlazer is a platform in the true sense in that it is composed of multiple techologies which all come together to form the core of the TaleBlazer experience. At its core, TaleBlazer lets users create their own games that take place in the real world, using a block-based scripting language. Users can then choose to publish their games to the world at large. Using an Android or iOS mobile device, players play TaleBlazer games by downloading the game and physically walking around in the real-world location of the game and interacting with virtual game ``agents'': user-scripted virtual entities that are placed by the game designer at specific GPS coordinates.
 
+\subsection{Overview of a TaleBlazer Game}
+
+A typical TaleBlazer consists of the following parts: 
+	\begin{itemize}
+		\item regions, the real-world locations where game takes place
+		\item roles
+		\item scenarios
+		\item agents, in-game virtual entities
+		\item traits, variables that belong to different in-game entities or the world
+		\item scriptblocks, sets of programming instructions that define the behaviors for game entities
+	\end{itemize}
+
+\subsubsection{Regions}
+
+Regions are real-world locations where TaleBlazer games take place. Using the game editor, game designers define their game regions by selecting an area of a Google map. Regions define the area where in-game virtual entities, called ``agents'' can be placed. Games can have one or more regions, each with their own name. The game designer also has the option of moving the player or agents from one region to another. [REGION PICTURE FROM EDITOR]  In order to play a TaleBlazer game, a player goes to the real-world location with their mobile device and moves around the region to activate the agents placed at the locations. 
+
+\subsubsection{Roles}
+
+Roles allow game designers to define different characters or types of interactions for different sets of players. A game can have one or more roles. If a single role is defined, then all players experience the same game. Multiple roles let the game designer define different sets of behaviors for different roles. Each role has a name and an optional description, which players see when choosing between roles at the start of a TaleBlazer game. For example, a competitive game might have players choose between the roles of ``Red Team'' and ``Blue Team''.
+
+\subsubsection{Scenarios}
+
+Scenarios allow game designers to create different versions of the same game that players can choose between. Games can have one or more scenarios, each with their own name. If a game has multiple scenarios, then the player is asked to choose between them at the start of a game. The game designer can tailor the behaviors of his game according to the choice of scenario. For example, scenarios could be difficulty options, such as ``Easy'', ``Medium'', and ``Hard''.
+
+\subsubsection{Agents}
+
+Agents are the in-game virtual entities with which players interact during the course of a TaleBlazer game. Agents have a name, description, set of behaviors, and an optional real-world location. Agents could be anything from a treasure chest to a non-player character (NPC) that interacts with the player. Users have multiple methods by which they can interact with agents. Agents placed within a region have corresponding GPS coordinates. Players interact with the agent by arriving at the GPS coordinates of an agent. Some games allow the user to tap on an agent's icon on the map of the game to interact with the agent, referred to as ``tap-to-visit''. Although there are many different ways that a player could come to interact with an agent, an agent interaction in general is referred to as an ``agent bump''.
+
+\subsubsection{Traits}
+
+Traits are variables that can be attached to agents, roles, or the game world in general. Traits have names and values and can be modified during the course of a game based on the behaviors defined by the game designer. Game designers can create their own custom traits, each with a user-defined value. Traits can be used to represent game mechanics from a player's score to complex timers. 
+
+\subsubsection{ScriptBlocks}
+
+ScriptBlocks is a block-based programming language that allows game designers to define the behaviors for their game. ScriptBlocks is ``block-based'' because all programming instructions come in the form of blocks that you connect together using a visual game editor. [FIG. OF CODE BLOCKS] For example, conditional behaviors can be defined using a conditional ``IF-ELSE'' block, which has sockets that allow you to insert other blocks to define the conditional statement to evaluate. Game designers can write game behaviors by creating agent or role-specific scripts, or by writing scripts applicable to the entire game world. 
+
+TaleBlazer contains a comprehensive set of programming blocks, encompassing logical and mathematical functions to TaleBlazer-specific blocks. For example, a user can easily check the state of a game agent or move an agent or player from one location to another.
+
+
+\subsection{TaleBlazer Technology}
+
+The TaleBlazer platform is comprised of four main parts:
+	\begin{itemize}
+ 		\item the game editor, which lets users create their own games
+ 		\item the mobile app, on which TaleBlazer games are played
+ 		\item the repository server, which stores and serves games
+ 		\item and the multiplayer server, which enables multiplayer TaleBlazer games
+ 	\end{itemize}
+
+\paragraph{Game Editor}
+The game editor is an online web application which lets users create their own TaleBlazer games through the use of a block-based scripting language. [PICTURE OF EDITOR?].
+
+
+
+
+
+
+
 \subsection{Past Projects}
 
 TaleBlazer is the most recent iteration and study into AR games performed at the STEP lab. Past projects, such as MITAR and StarLogo TNG, provided a basis on which TaleBlazer was built, namely the emphasis on augmented reality and the use of a block-based scripting language.
@@ -18,17 +76,7 @@ MITAR (MIT Augmented Reality) was the immediate ancestor of TaleBlazer. Similar 
 
 StarLogo TNG (The Next Generation) was a project in programmable simulation modeling which allowed users to explore the workings of complex decentralized systems, such as ant colonies and traffic jams. [SOURCE THIS] Similar to TaleBlazer, users could program the simulation using a block-based scripting language. 
 
-\subsection{TaleBlazer Technology}
 
-The TaleBlazer platform is comprised of four main parts:
-	\begin{itemize}
- 		\item the game editor, which lets users create their own games
- 		\item the mobile app, on which TaleBlazer games are played
- 		\item the repository server, which stores and serves games
- 		\item and the multiplayer server, which enables multiplayer TaleBlazer games
- 	\end{itemize}
-
-This software allows the user to play the role of the designer and create his/her own
 
 
 
