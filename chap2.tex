@@ -32,7 +32,7 @@ Scenarios allow game designers to create different versions of the same game tha
 
 \subsubsection{Agents}
 
-Agents are the in-game virtual entities with which players interact during the course of a TaleBlazer game. Agents have a name, description, set of behaviors, and an optional real-world location. Agents could be anything from a treasure chest to a non-player character (NPC) that interacts with the player. Users have multiple methods by which they can interact with agents. Agents placed within a region have corresponding GPS coordinates. Players interact with the agent by arriving at the GPS coordinates of an agent. Some games allow the user to tap on an agent's icon on the map of the game to interact with the agent, referred to as ``tap-to-visit''. Although there are many different ways that a player could come to interact with an agent, an agent interaction in general is referred to as an ``agent bump''.
+Agents are the in-game virtual entities with which players interact during the course of a TaleBlazer game. Agents have a name, description, set of behaviors, and an optional real-world location. Agents could be anything from items like a treasure chest to a non-player character (NPC) that gives a player quests. Users have multiple methods by which they can interact with agents. Agents placed within a region have corresponding GPS coordinates. Players interact with the agent by arriving at the GPS coordinates of an agent. Some games allow the user to tap on an agent's icon on the map of the game to interact with the agent, referred to as ``tap-to-visit''. Although there are many different ways that a player could come to interact with an agent, an agent interaction in general is referred to as an ``agent bump''.
 
 \subsubsection{Traits}
 
@@ -40,10 +40,9 @@ Traits are variables that can be attached to agents, roles, or the game world in
 
 \subsubsection{ScriptBlocks}
 
-ScriptBlocks is a block-based programming language that allows game designers to define the behaviors for their game. ScriptBlocks is ``block-based'' because all programming instructions come in the form of blocks that you connect together using a visual game editor. [FIG. OF CODE BLOCKS] For example, conditional behaviors can be defined using a conditional ``IF-ELSE'' block, which has sockets that allow you to insert other blocks to define the conditional statement to evaluate. Game designers can write game behaviors by creating agent or role-specific scripts, or by writing scripts applicable to the entire game world. 
+ScriptBlocks is a block-based programming language that allows game designers to define the behaviors for their game. ScriptBlocks is ``block-based'' because all programming instructions come in the form of blocks that you connect together using a visual game editor. [PICTURE OF CODE BLOCKS] For example, conditional behaviors can be defined using a conditional ``IF-ELSE'' block, which has sockets that allow you to insert other blocks to define the conditional statement to evaluate. Game designers can write game behaviors by creating agent or role-specific scripts, or by writing scripts applicable to the entire game world. 
 
-TaleBlazer contains a comprehensive set of programming blocks, encompassing logical and mathematical functions to TaleBlazer-specific blocks. For example, a user can easily check the state of a game agent or move an agent or player from one location to another.
-
+TaleBlazer contains a comprehensive set of programming blocks, encompassing logical and mathematical functions to TaleBlazer-specific blocks. For example, a user can easily check the state of a game agent or move an agent or player from one location to another. [FIGURE OF ALL SCRIPTBLOCKS]
 
 \subsection{TaleBlazer Technology}
 
@@ -55,14 +54,24 @@ The TaleBlazer platform is comprised of four main parts:
  		\item and the multiplayer server, which enables multiplayer TaleBlazer games
  	\end{itemize}
 
-\paragraph{Game Editor}
-The game editor is an online web application which lets users create their own TaleBlazer games through the use of a block-based scripting language. [PICTURE OF EDITOR?].
+\subsubsection{Game Editor}
+The game editor is an online web application which lets users create their own TaleBlazer games through the use of ScriptBlocks, a block-based scripting language. [PICTURE OF EDITOR?]. Using the editor, users select their game regions, create agents, roles and scenarios, and program the game by composing scripts. Users can save and publish their games, with the option of making their game open to the public or private. The game editor also provides options for modifying the game interface that players see when playing a game on their mobile device. The game editor is written in JavaScript. 
 
+\subsubsection{TaleBlazer Mobile}
 
+TaleBlazer Mobile is an Android and iOS mobile app that lets users play TaleBlazer games. Users download the app via their respective app stores. TaleBlazer Mobile lets users download TaleBlazer games onto their device and play them, utilizing the location-aware functionalities of the device. TaleBlazer Mobile interprets the blocks in each game file and executes them during the course of the game.
 
+The TaleBlazer Mobile game interface consists primarily of a map of the current game region and icons indicating the position of the player and active game agents. Tabs along the top of the screen provide different gameplay functionalities. For example, a game can include the Inventory tab, which tracks currently held items, or the Log tab, which contains a log of all the actions a player has taken during the course of a game.
 
+TaleBlazer Mobile is written using Appcelerator Titanium, an SDK that lets developer write native Android and iOS applications using JavaScript. 
 
+\subsubsection{TaleBlazer Server}
 
+TaleBlazer Server is the main repository server which handles user accounts, hosts the game editor, and stores and serves TaleBlazer games and game-related files (e.g. images, video). TaleBlazer Server is written in PHP using the CakePHP framework and backed by a MySQL database. 
+
+\subsubsection{TaleBlazer Multiplayer}
+
+TaleBlazer Multiplayer is a separate server which provides multiplayer functionality for TaleBlazer games. TaleBlazer Multiplayer implements a separate protocol which allows devices to take part in multiplayer games. Furthermore, it synchronizes the state of the world between all devices. The server is written in Node.js, using JavaScript.
 
 \subsection{Past Projects}
 
