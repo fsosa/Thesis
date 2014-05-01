@@ -11,7 +11,8 @@ VSNC
     3.1. Key Considerations and Requirements
         3.1.1. Types of Analytics Information to Capture
         3.1.2. Choice of Server Technology
-        3.1.3. 
+        3.1.4  UI Mockups
+        3.1.3. Log Tab
 4. TaleBlazer Analytics
     4.1. Key Components
 5. TaleBlazer Analytics Server

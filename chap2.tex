@@ -1,6 +1,6 @@
 \chapter{Background}
 
-This section details the background of the TaleBlazer project, including the separate components of TaleBlazer and how it works as a whole. The history of TaleBlazer and past location-based projects are also detailed. Finally, this chapter expands on the need for TaleBlazer Analytics and prior analytics solutions. 
+This chapter details the background of the TaleBlazer project, including the separate components of TaleBlazer and how it works as a whole. The history of TaleBlazer and past location-based projects are also detailed. Finally, the chapter expands on the need for TaleBlazer Analytics and prior analytics solutions. 
 
 \section{TaleBlazer}
 
@@ -99,18 +99,18 @@ The overall purpose of collecting TaleBlazer gameplay metrics is to provide inte
 		\item Institutions
 	\end{itemize}
 
-\paragraph{Game designers}
+\subsubsection{Game designers}
 Game designers are primarily interested in seeing how players progress through the game and the choices they make along the way. Using this formation, a game designer can quickly determine problematic spots in the game. For example, players may stop playing after a particular point in the game because the instructions to proceed aren't clear or there is a possible bug in the designed behaviors. As a result, the game designer can improve the game to make it a better experience for the players.
 
-\paragraph{Educational researchers}
+\subsubsection{Educational researchers}
 
 Educational researchers are interested in seeing how a game's content affects a player in the short or long-term. The choices that a player makes during a session can inform the researcher as to the level of a player's knowledge or how the content affected the player's understanding of the topic at hand. Often, the gameplay metrics are paired with external data, such as post-gameplay questionnaires or interviews. For exampe, a researcher studying a game about the environment might look at if a player encountered an EPA agent in-game or how fast they completed the game to see if a player missed crucial information or may not have been paying attention.
 
-\paragraph{TaleBlazer developers}
+\subsubsection{TaleBlazer developers}
 
 TaleBlazer developers are interested in the technical aspects of games in order to inform future technical decisions and feature roadmaps. For example, the kinds of devices being used and the version of their operating system (OS) is supremely useful in determining possible technical issues related to specific devices and the adoption rate of new OS versions. This information can then be applied to guide the TaleBlazer development process and provide concrete data with which to prioritize tasks. 
 
-\paragraph{Institutions}
+\subsubsection{Institutions}
 
 Analytics data may also be used for purposes outside of games. TaleBlazer is currently in use at several institutions across the country, such as botanical gardens, zoos, and historical sites. In these cases, quantitative metadata concerning when and how long games are played can prove especially useful in determining the effectiveness and impact of TaleBlazer games on vistors. Additonally, it can potentially provide information about the effects of exhibits and areas at an institution.
 
@@ -119,18 +119,18 @@ Analytics data may also be used for purposes outside of games. TaleBlazer is cur
 The user-generated nature of TaleBlazer games results in games that span a huge range of possibilities. As a result, TaleBlazer requires an analytics solution that is both \textit{flexible} and \textit{useful}: flexible in order to accomodate the range of possibilities, and useful in order to provide meaningful analytics.
 
 Existing solutions fail in two regards:
-	\begin{enumerate}
-		\item They fail to provide data analysis useful to TaleBlazer.
-		\item They fail to provide an adequate level of user privacy.
-	\end{enumerate}
+\begin{enumerate}
+	\item They fail to provide data analysis useful to TaleBlazer.
+	\item They fail to provide an adequate level of user privacy.
+\end{enumerate}
 
-\paragraph{Lacking Data Analysis}
+\subsubsection{Lacking Data Analysis}
 
 Existing mobile analytics services focus on providing a general data collection solution for its users. Solutions provided by Flurry and Mixpanel focus on an event-based method of analytics, which tracks unique events across every use of the app. However, these services cannot generate data analytics that are useful and specific to TaleBlazer because they focus on collecting data and not providing application-specific data analysis.
 
 As a result, it was necessary to develop an analytics system built specifically with TaleBlazer in mind. Specifically, this means that features such as data collection, categorization, and statistics calculation can be customized to fit the specific use cases of TaleBlazer Analytics users. 
 
-\paragraph{Non-Adequate User Privacy}
+\subsubsection{Non-Adequate User Privacy}
 
 A separate concern arises when dealing with the nature of the TaleBlazer analytics data and the question of privacy. Privacy is supremely important to the TaleBlazer project, as games are often played by minors and students. As a result, it is a requirement that any collected data be completely anonymized and only used for educational and research purposes. Solutions, such as Flurry, do not guarantee the absolute privacy of the data provided to them and in fact may share that data with third parties. [FLURRY CITATION HERE].
 
