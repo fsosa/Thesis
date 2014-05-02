@@ -8,13 +8,63 @@ Prior to the start of the development of TaleBlazer Analytics (TA), many decisio
 
 \subsection{Types of Analytics Data to Capture}
 
-The key purpose of TaleBlazer Analytics is to capture metrics about TaleBlazer games. In order to achieve this, it was first necessary to determine exactly what kinds of data would be useful to capture and if we could capture it. First, preliminary work was performed in TaleBlazer Mobile to identify the types of information that TA was to collect through the development of an additional mobile tab dedicated to logging information. Second, a collaborative process was undertaken to arrive at a feature specification for the use cases of TaleBlazer Analytics users. 
+The key purpose of TaleBlazer Analytics is to capture metrics about TaleBlazer games. In order to achieve this, it was first necessary to determine exactly what kinds of data would be useful to capture and if we could capture it. First, preliminary work was performed in TaleBlazer Mobile to identify the types of information that TA was to collect through the development of an additional mobile tab dedicated to logging information. Second, a collaborative process was undertaken to arrive at user stories for TaleBlazer Analytics users. Finally, these user stories defined the analytics data that were to be captured. 
 
 \subsubsection{Log Tab}
 
 The Log Tab is a new tab in TaleBlazer Mobile that was developed specifically to lay the foundation for the development of the TA system. This tab contains a chronologically-sorted list of game events that players can view in order to get a high-level picture of the actions they have taken during a gameplay session. A gameplay session consists of all the events taken from when a game is started to when it is ended, by restarting the game. The Log Tab contains information such as when a particular agent was bumped and if a player picked up certain items. 
 
-The purpose of the Log Tab was two-fold. First, it served as a way to identify game events that would be useful to collect as data. If a particular event was deemed necessary to go in the log, then that type of data was prioritized to collect. 
+The purpose of the Log Tab was two-fold. First, it served as a way to identify game events that would be useful to collect as data. If a particular event was deemed necessary to go in the log, then that type of data was prioritized to collect. It also helped alert us to the kinds of data that were possible to collect. This helped us reach a feasible and grounded feature specification later on. Second, it served as a way to introduce players and game designers to the types of game events that we would later go on to track in TaleBlazer Analytics.
+
+\subsection{User Stories}
+
+In order to determine the specific events that were to be captured, we worked backward to determine what types of analytics data would be the most useful to users. This came in the form of user stories: short sentences that describe at a high-level what users will want from a product. As a team, the types of users that would be interested in TaleBlazer Analytics were decided and short stories were written for each of them.
+The three types of users that were determined were: 
+	\begin{itemize}
+		\item occasional users 
+		\item power users (i.e. designers and researchers)
+		\item TaleBlazer staff (i.e. developers and researchers)
+	\end{itemize}
+
+Occasional users are people that have made and played a few TaleBlazer games and are primarily interested in high level analytics data, such as how long people played their game and how many people completed the game. Power users are game designers and educational researchers and are interested in more detailed statistics, such as the ability to categorize the data based on the roles and scenarios of players. These users are also interested in generating their own custom analytics data. Finally, TaleBlazer staff are developers and researchers that are interested in a high-level picture of how TaleBlazer games are being played. This includes technical information such as the models of devices being used and their screen resolutions. [FIG. OF SOME USER STORIES (maybe a full table??)] One of the user stories we wrote, for example, was: ``As an occasional user, I want to be able to see what version of my game they played.''
+
+\subsection{Analytics Data}
+
+With the user stories, we were able to determine exactly what kinds of data we wanted to collect. TaleBlazer Analytics takes an event-based approach to data collection. All events record the time that they occurred in-game, as well as event-specific information. The data that we were interested in capturing involved the following:
+
+	\begin{itemize}
+		\item devices
+		\item sessions
+		\item agent bump event
+		\item region switch event
+		\item game completion event
+		\item custom events
+	\end{itemize}
+
+\subsubsection{Devices}
+
+Device information was critical to capture in order to gather technical metrics and to be able to identify unique users. This information involved the OS and its version, the model of the device, and the screen resolution. Additionally, each device has a unique ID specific to TaleBlazer and cannot be traced back to the device or used to identify it for non-TaleBlazer purposes.
+
+\subsubsection{Sessions}
+
+Sessions represent all the information about a single gameplay session. All events that take place within a game are tied to a particular session. Sessions consist of the time that the game was started and the time of the last event that occurred. They also contain information about the particular role and scenario chosen for that gameplay session and whether the tap-to-visit setting was enabled during the session. Finally, the session is tied back to the particular version of the game being played and the device on which it was played.
+
+\subsubsection{Agent Bump Event}
+
+An agent bump event occurs when the player ``bumps'' into an agent, via a variety of methods. An agent can be bumped by:
+	\begin{itemize}
+		\item walking within range of its GPS coordinates (``BUMP''),
+		\item being tapped on when tap-to-visit is enabled (``TAP''),
+		\item being encountered via the augmented reality camera HUD (``HUD''),
+		\item unlocked by entering a password called a clude code (``CLUE''),
+		\item or being accessed from the inventory (``INV'')
+	\end{itemize}
+
+Each agent bump event records the name and unique ID of the agent, how the agent was bumped, and the session that the event took place in. 
+
+\subsubsection{Region Switch Event}
+
+A region switch event occurs when the player moves from one game region to another, which occurs based on a designer-implemented behavior. Each region switch records 
 
 \subsection{Choice of Server Technology}
 
