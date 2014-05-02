@@ -13,12 +13,130 @@ VSNC
         3.1.2. Choice of Server Technology
         3.1.4  UI Mockups
         3.1.3. Log Tab
+
 4. TaleBlazer Analytics
-    4.1. Key Components
-5. TaleBlazer Analytics Server
-6. TaleBlazer Analytics Client
-7. TaleBlazer Analytics Site
-8. Testing
-9. Future Work
-10. Conclusion
+    4.1 Technical Overview (Key Components)
+        4.1.1 TaleBlazer Analytics Server
+            - Written in Node.js
+            - Uses Express applications framework
+            - RESTful API
+            - Collects data and serves the TA site
+        4.1.2 TaleBlazer Analytics Client
+            - Standalone Javascript client handles API workflow
+            - Configurable to handle changing use cases
+        4.1.3. TaleBlazer Analytics Site (web application)
+            - Focus on its use of API calls via AJAX (client-side focus), light server-side templating
+    4.2. TaleBlazer Analytics Server
+        - Overview
+            + MVC web application powered by REST APIs
+            + Test-driven
+            + Configurable and easy to setup for local development / maintainable
+        - Key things to talk about:
+            + Uses Express web application framework
+                * Minimal framework, non-opinionated
+                * Example route code (?)
+            + Organized as MVC
+                * Models using Sequelize ORM
+                    - Abstracts and simplifies SQL queries from a programming standpoint
+                    - Maybe include some example ORM code
+                    - Sequelize provides database migrations
+                * Views using light ECT templating
+                * Controllers
+            + RESTful API (explain what that is)
+                * All follow the same format
+                    - JSON using the JSEND response format
+                        + Example JSEND format
+                    - Correct HTTP headers and HTTP status codes
+                        + Enforced to provide consistency
+                * Two main API groups:
+                    - Data Collection API
+                        + Device registratin
+                        + Session requests
+                        + Batch Events API
+                    - Data Analysis API (single API per site page)
+                            * For these, write info on how stats are calculated (?)
+                        + Games Played
+                        + Gameplay Duration
+                        + Agent Bumps
+                        + Custom Events
+                        + Data Download
+                            * CSV functionality   
+            + Development Methodology
+                * Maintainability! (Maintainable)
+                    - Configurable (db json and config)
+                    - Easy to setup for local development
+                    - Simple deployment process
+                * Test-Driven Development using Mocha (Test-driven)
+                * Adhere to standards for consistency (Standards Compliant)
+                * Simultaneous Documentation (Documentation Focused)
+            + Deployment
+                * Proxy server using Nginx
+                    - Apache and Node both running on port 80
+                    - Allows us to get around restrictive firewall settings
+                    - Simple configuration
+                * Logging
+                    - Provided by Winston (request and error logs)
+    4.3 TaleBlazer Analytics Client
+        - Overview
+            + Standalone JS client for TaleBlazer Mobile
+            + Handles API workflow 
+                * Explain how the API works in practice
+            + Has to work offline (i.e track offline games) and send data when possible
+            + lines of code (???)
+        - API workflow (How data gets collected
+            + High-level workflow
+                * Register device -> request session -> send events
+                * Happens periodically (configurable) to prevent multiple unnecessary requests
+                * can only send events if device registered and have session
+                * If network not available, queues events until network becomes available
+                * Stores events locally so that data is not lost through app restarts
+            + Device registration
+                * ensures that we can track unique events
+                * cannot track events without registering device
+                * device id using SHA256 hash of device id 
+                    - possibly real device id on android, install-specific on iOS
+                * sends up information about the specific device
+                    - screen res, os type and os version
+            + Session request
+                * All sessions start as local sessions 
+                    - allows us to track events offline
+                * Once network becomes available, network session is requested
+                    - sessions identified by a globally unique session id
+                    - local sessions converted to network sessions
+                * sessions contain info about gameplay specific stuff: roles, scenario, tap-to-visit, etc.
+            + Event tracking
+                * Client provides methods to track events
+                    - Mobile utilizes those methods to suit the event and info to be sent up
+                * All events have a session ID and the time that the event occurred
+                * Events are sent up in configurable-size batches
+                    - can contain events from different sessions and games
+    4.4 TaleBlazer Analytics Site
+        - Overview
+            + Provides statistics calculated from the collected gameplay data
+            + Game-based, for a particular game (identified by a draft id)
+            + Filter data down to the date (possibly time in the future)
+            + Download raw data
+            + Client-side focused, uses REST api via AJAX calls, light templating 
+            + mobile friendly aka 
+        - Site Pages
+            + Overview
+            + Games Played
+            + Gameplay Duration
+            + Agent Bumps
+            + Custom Events
+            + Download Data
+            + 
+5. Testing (?)
+    - Feedback from partners
+    - iterative design process on site
+    - survey info 
+6. Future Work
+    - Visualizations
+    - Authentication/Authorization via TaleBlazer Server
+        + cookie sessions implemented in Node
+    - Implement a Service layer for shared controller calls
+    - Use async library for future test
+        + nested async callbacks often hard to read
+        + async makes it easy to read
+7. Conclusion
 
