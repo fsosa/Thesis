@@ -1,16 +1,14 @@
 \chapter{Preliminary Work}
 
-This chapter details the preliminary work that was performed prior to the developent of TaleBlazer Analytics. It expands on the process of arriving at the technical and design descisions that defined the scope of the thesis work and what TaleBlazer Analytics was to eventually become. 
-
-\section{Key Decisions}
+This chapter details the preliminary work that was performed prior to the developent of TaleBlazer Analytics. It expands on the process of arriving at the technical and design descisions that defined the scope of the thesis work, including the types of analytics data to collect. 
 
 Prior to the start of the development of TaleBlazer Analytics (TA), many decisions had to be made in order to arrive at a feature specification for the TA system. In order to develop a useful analytics system, the types of analytics data to capture had to be determined. To meet the technical needs of the project, the technology used to build the new system had to be benchmarked and determined. Finally, the user interface for the TA web application was mocked up and underwent an iterative design process.
 
-\subsection{Types of Analytics Data to Capture}
+\section{Types of Analytics Data to Capture}
 
 The key purpose of TaleBlazer Analytics is to capture metrics about TaleBlazer games. In order to achieve this, it was first necessary to determine exactly what kinds of data would be useful to capture and if we could capture it. First, preliminary work was performed in TaleBlazer Mobile to identify the types of information that TA was to collect through the development of an additional mobile tab dedicated to logging information. Second, a collaborative process was undertaken to arrive at user stories for TaleBlazer Analytics users. Finally, these user stories defined the analytics data that were to be captured. 
 
-\subsubsection{Log Tab}
+\subsection{Log Tab}
 
 The Log Tab is a new tab in TaleBlazer Mobile that was developed specifically to lay the foundation for the development of the TA system. This tab contains a chronologically-sorted list of game events that players can view in order to get a high-level picture of the actions they have taken during a gameplay session. A gameplay session consists of all the events taken from when a game is started to when it is ended, by restarting the game. The Log Tab contains information such as when a particular agent was bumped and if a player picked up certain items. 
 
@@ -31,13 +29,12 @@ Occasional users are people that have made and played a few TaleBlazer games and
 \subsection{Analytics Data}
 
 With the user stories, we were able to determine exactly what kinds of data we wanted to collect. TaleBlazer Analytics takes an event-based approach to data collection. All events record the time that they occurred in-game, as well as event-specific information. The data that we were interested in capturing involved the following:
-
 	\begin{itemize}
 		\item devices
 		\item sessions
-		\item agent bump event
-		\item region switch event
-		\item game completion event
+		\item agent bump events
+		\item region switch events
+		\item game completion events
 		\item custom events
 	\end{itemize}
 
@@ -64,8 +61,38 @@ Each agent bump event records the name and unique ID of the agent, how the agent
 
 \subsubsection{Region Switch Event}
 
-A region switch event occurs when the player moves from one game region to another, which occurs based on a designer-implemented behavior. Each region switch records 
+A region switch event occurs when the player moves from one game region to another. As there is no automated way for a player to move between regions, this occurs when the player triggers a ``MOVE TO REGION'' block, implemented by the game designer. Each region switch event records the name and unique ID of the region , as well as its corresponding session.
 
-\subsection{Choice of Server Technology}
+\subsubsection{Game Completion Event}
 
-\subsection{UI Design}
+Game completion events record when a particular game was completed. Prior to TaleBlazer Analytics, TaleBlazer games did not have a fixed concept of the end of a game. In order to track this data, a new block was added to the game editor called the ``END GAME'' block. The sole purpose of this block is to mark the end of a game from an analytics standpoint. Game designers can use this block in their to mark end conditions in their games or points after which they do not want to continue tracking events for that session. Naturally, each game completion is tied to a session. 
+
+\subsubsection{Custom Events}
+
+In developing user stories for the project, it was determined that power users wanted a way to track data custom to their specific games. To meet this need, a new \newline ``ANALYTICS EVENT'' block was added to the game editor. Users can create and name their own custom event and track whichever values they would like. For example, a user might create an analytics event called ``Player score'' and track the value of a trait representing the player's score. The game designer then places the block where he/she would like the event to be triggered. This allows game designers the flexibility to use the TA system to meet their requirements.
+
+In terms of TaleBlazer Analytics, custom events record the name and unique ID of the custom event, as well as the value at the time the ``ANALYTICS EVENT'' block was triggered. As usual, these custom events are tied to their respective sessions. 
+
+\section{Choice of Server Technology}
+
+To meet the technical needs of the project, it was necessary to list out the technical requirements that capturing analytics for TaleBlazer games would require. The technical requirements for the project led to the consideration of two different server technologies: Node.js and PHP/Apache. 
+
+\subsection{Technical Requirements}
+
+The main goal of TaleBlazer Analytics was to provide real-time data collection and analysis for its users. Furthermore, a goal of the project was to provide a fine level of detail and granularity in the analytics data. For example, users of the system should be able to view the number of unique and total bumps for a particular agent, categorized by a set of pre-defined categories, such as the role of the player and the date.This fine level of detail required TaleBlazer Analytics to keep track of the unique events that occur for the types of data that we wanted to capture. For example, this meant that each individual agent bump would have to be tracked and stored. As a result, TaleBlazer Analytics required a server technology that could handle a massive amount of concurrent requests. 
+
+Another requirement had to do with the existing technologies in use on the TaleBlazer project. In general, the choice of technology for a new project is driven largely by the existing technologies already in use. This allows members of the team to more easily transition between often components of varying purpose. The majority of the TaleBlazer platform is written in JavaScript, with the sole exception being TaleBlazer Server, written in PHP. As a result, it was necessary to pick a server technology that utilized either JavaScript or PHP in order to maintain technical consistency throughout the platform. 
+
+\subsection{Node.js vs PHP}
+
+The two main choices for server technologies that met our requirements were Node.js and PHP running on Apache (referred to as PHP/Apache). Each of these techologies were already being used in the TaleBlazer platform: TaleBlazer Multiplayer runs on Node.js and TaleBlazer Server runs on PHP/Apache. 
+
+\subsubsection{Node.js}
+
+Node.js is an asynchronous, event-driven software platform for building highly-scalable network applications in JavaScript. Node utilizes the Google V8 JavaScript engine for its runtime, which is also used in the Google Chrome browser. 
+
+\subsubsection{PHP/Apache}
+
+\susubsection{Benchmark Results}
+
+\section{UI Design}
