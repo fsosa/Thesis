@@ -16,6 +16,8 @@ VSNC
 
 4. TaleBlazer Analytics
     4.1 Technical Overview (Key Components)
+        - The TaleBlazer Analytics system is composed of server, client, site. How they work together. Blah. 
+        
         4.1.1 TaleBlazer Analytics Server
             - Written in Node.js
             - Uses Express applications framework
@@ -26,6 +28,7 @@ VSNC
             - Configurable to handle changing use cases
         4.1.3. TaleBlazer Analytics Site (web application)
             - Focus on its use of API calls via AJAX (client-side focus), light server-side templating
+            
     4.2. TaleBlazer Analytics Server
         - Overview
             + MVC web application powered by REST APIs
@@ -134,6 +137,7 @@ VSNC
     - Visualizations
     - Authentication/Authorization via TaleBlazer Server
         + cookie sessions implemented in Node
+        + OAuth or shared sessions via Cake DB sessions 
     - Implement a Service layer for shared controller calls
     - Use async library for future test
         + nested async callbacks often hard to read

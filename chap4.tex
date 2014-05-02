@@ -1,0 +1,38 @@
+\chapter{TaleBlazer Analytics}
+
+This chapter provides a high-level overview of the three different components that make up the TaleBlazer Analytics system: the analytics server, client, and website. The TaleBlazer Analytics system is described in its entirety, including specifics about each component and how the components work together to form the core of the analytics functionality. 
+
+\section{Technical Overview} 
+
+TaleBlazer Analytics is composed of three different components that work together to gather, analyze, and present gameplay metrics for TaleBlazer games. The three components are: 
+	\begin{itemize}
+		\item analytics server
+		\item analytics client
+		\item analytics website
+	\end{itemize}
+
+The analytics server is a Node.js application that is responsible for receiving, processing, and analyzing gameplay metrics, as well as serving the analytics website. It forms the backbone of the TA system. 
+
+The analytics client is a standalone JavaScript client which is integrated into TaleBlazer Mobile and is responsbile for the actual collection of gameplay metrics and handles all the workflow of interactions between TaleBlazer Mobile and the analytics server. 
+
+The analytics website allows users to view and download the calculated statistics for their TaleBlazer games. The site receives its information via calls to an API (Application Programming Interface) hosted by the analytics server. The site is written in JavaScript with a focus on client-side page rendering, with light server-side templating. 
+
+\section{Analytics Server}
+
+This section provides an in-depth explanation of the technology and development process behind the analytics server.
+
+\subsection{Technical Overview}
+
+The TaleBlazer Analytics server is a Node.js web application that is responsible for collecting, proessing, and analyzing all the gameplay metrics received from TaleBlazer Mobile via the analytics client. The analytics server is built using Express, a web application framework that provides a robust library for building web services. The server follows the MVC (Model-View-Controller) development pattern for structuring the application. The server is a RESTful web service, which means that all external interactions with the server occur via REST (Representational State Transfer) APIs. [Cite REST]. 
+
+Strict development methodologies were adopted to ensure that the server is maintainable for future developers.To this end, the analytics server is maintainable, test-driven, standards-compliant, and extensively documented. The server was built to be easily configurable and simple to deploy in local, testing, and production environments. Deployment in production environments is simplified through the use of Nginx as a proxy server and comprehensive logging functionality.
+
+\subsection{}
+
+% A main technical goal of the project was to make the server maintainable for future developers. To this end, the test-driven development methodology was employed to ensure that all aspects of the server were covered by tests. Additionally, the server is easily configurable and simple to deploy in local, development, and production environments. An additional layer of 
+
+
+
+
+
+
