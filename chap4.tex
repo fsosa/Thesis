@@ -23,13 +23,61 @@ This section provides an in-depth explanation of the technology and development 
 
 \subsection{Technical Overview}
 
-The TaleBlazer Analytics server is a Node.js web application that is responsible for collecting, proessing, and analyzing all the gameplay metrics received from TaleBlazer Mobile via the analytics client. The analytics server is built using Express, a web application framework that provides a robust library for building web services. The server follows the MVC (Model-View-Controller) development pattern for structuring the application. The server is a RESTful web service, which means that all external interactions with the server occur via REST (Representational State Transfer) APIs. [Cite REST]. 
+The TaleBlazer Analytics server is a Node.js web application that is responsible for collecting, proessing, and analyzing all the gameplay metrics received from TaleBlazer Mobile via the analytics client. The analytics server is built using Express, a web application framework that provides a robust library for building web services. The server follows the MVC (Model-View-Controller) development pattern for structuring the application. The server is a RESTful web service, which means that all external interactions with the server occur via REST (Representational State Transfer) APIs. [Cite REST]. MySQL is used as the backing database for analytics data.
 
 Strict development methodologies were adopted to ensure that the server is maintainable for future developers.To this end, the analytics server is maintainable, test-driven, standards-compliant, and extensively documented. The server was built to be easily configurable and simple to deploy in local, testing, and production environments. Deployment in production environments is simplified through the use of Nginx as a proxy server and comprehensive logging functionality.
 
-\subsection{}
+\subsection{Server Structure}
 
-% A main technical goal of the project was to make the server maintainable for future developers. To this end, the test-driven development methodology was employed to ensure that all aspects of the server were covered by tests. Additionally, the server is easily configurable and simple to deploy in local, development, and production environments. An additional layer of 
+A crucial step in developing the analytics server was deciding on the best way to structure the server. The main goal was to reach an optimum level of component decoupling, which would allow features to be easily implemented and modified without affecting unrelated parts of the application. To this end, the Express web application framework was used to provide the high-level web-oriented functionality, such as routing and HTTP request handling. The application is split up into models, views, and controllers (MVC), which separates code according to their functionality. 
+
+\subsubsection{Express}
+Express is a minimal, non-opinionated framework that provides a framework for building web applications. It is built on top of the low-level Node.js HTTP module and provides a high-level API for handling all interactions having to do with HTTP requests. At its core, Express provides simple ways of routing URLs, parsing HTTP requests, sending HTTP responses, and defining paths for request processing via middleware. Defining what code to execute based on a request to a URL (routing) is simple using Express:
+
+\medskip
+\begin{lstlisting}[caption=Example Express Routing]
+// Responds to a GET request at /helloWorld with the text 'Hey there'
+app.get('/helloWorld', function(res, req) {
+	res.send('Hey!');
+});
+\end{lstlisting}
+
+Express handles incoming requests by passing a request according to a defined path of functions, known as middleware. For the analytics server, this provided the ability to implement robust error handling and logging functionality. 
+
+\subsubsection{Model-View Controller}
+
+Code in the analytics server is organized according to the Model-View-Controller (MVC) pattern, which allows us to separate code into logical components based on their functionality. Models represent database objects and contain retrieval and modification methods. Controllers handle incoming requests by retrieving information for specific models and sending the information the the requestor. Views contain the logic for the user interface and request information from controllers. 
+
+\paragraph{Models} 
+Models in the analytics server correspond directly to their respective database tables and allow us to easily perform queries on the database without having to write SQL. This is accomplished via Sequelize, an object-relational mapping (ORM) library, which handles the database connection and abstracts SQL queries by providing a high-level JavaScript API. Sequelize also provides migration functionality, which lets us make incremental changes to the database schema. 
+
+The models for TaleBlazer Server represent exactly the types of information as defined in section \ref{sec:analytics_data}, with the following exceptions and additions:
+
+	\begin{enumerate}
+		\item Custom events are represented jointly by a Custom Event and Custom Event Trigger model
+		\item Games are represented by a Draft and Draft State model.
+	\end{enumerate}
+
+\subparagraph{Custom Events}
+	Data about custom events is split up into two models: Custom Events and Custom Event Triggers. The Custom Events model contains information the unique ID and name of the event, as well as what game it belongs to.
+	The Custom Event Trigger model represents an actual instance of a custom event i.e. the time the event occurred, the value of the custom event block, the ID of the session it occurred in, and a reference to the Custom Event model whose instance the trigger represents.
+
+	The Custom Event model exists on its own due to the process of database normalization. This process structures database tables so as to avoid unnecessary repetition of information. As a result, normalized database tables perform at optimal speeds. In particular, the existence of the Custom Event model allows us to quickly retrieve all custom events associated with a particular game, which is necessary in the final analytics site.
+
+\subparagraph{Games}
+	In the database (and the corresponding model), a game is represented by a Draft and a Draft State. Drafts contain information consistent throughout all versions of a game, such as the user who made it and the the most recent version of the game. Draft States represent versions of a game and contain information specific to a particular game version, such as the name of the game and its description. Draft States also contain the ID of the Draft that they belong to.
+
+\paragraph{Controllers} 
+
+Controllers for the analytics server handle, process, and respond to requests. Each controller provides the functions that get executed when a URL is requested. For example, requests for device information will always go through the device controller. 
+
+
+\paragraph{Views}
+
+
+
+
+
 
 
 

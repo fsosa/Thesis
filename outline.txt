@@ -16,6 +16,7 @@ VSNC
 
 4. TaleBlazer Analytics
     4.1 Technical Overview (Key Components)
+        - high level overview of how the system works
         - The TaleBlazer Analytics system is composed of server, client, site. How they work together. Blah. 
         
         4.1.1 TaleBlazer Analytics Server
@@ -25,7 +26,7 @@ VSNC
             - Collects data and serves the TA site
         4.1.2 TaleBlazer Analytics Client
             - Standalone Javascript client handles API workflow
-            - Configurable to handle changing use cases
+            - Configurable to handle changing se cases
         4.1.3. TaleBlazer Analytics Site (web application)
             - Focus on its use of API calls via AJAX (client-side focus), light server-side templating
             
