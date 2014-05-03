@@ -132,6 +132,7 @@ The session request API allows gameplay sessions to be recorded on the analytics
 The batch event processing API is the most complex in the data collection group. The batch event API takes a list of event objects, each corresponding to the types of events previously mentioned (e.g. agent bumps or region switches) and saves each event to the database. If a single event in the list of events is invalid or an error occurs while saving an event, then the entire request fails and the API responds with a failure. This is accomplished through the use of database transactions, which provide an ``all-or-nothing'' guarantee: either everything is saved or nothing is. This is beneficial because it alerts the API user that an error has occurred and that no data was saved. Otherwise, it would be difficult to tell what was saved to the database and what wasn't. As a result, it provides consistent ``fail-fast'' behavior for the API and avoids tracking possibly problematic data.
 
 \subsubsection{Data Analysis API}
+\label{subsec:analysis_api}
 
 The data analysis API consists of the API endpoints that calculate and provide analytics data for the analytics site. Currently, all statistics are calculated on-the-fly when requested via the API. The data analytics API consists of the following endpoints:
 	\begin{itemize}
@@ -301,18 +302,77 @@ Events are persisted locally in order to persist through application and device 
 
 \section{TaleBlazer Analytics Site}
 
-
+The sections details the structure of the analytics site and its features. It also provides examples of the user interface. 
 
 \subsection{Technical Overview}
 
-% \subsection{Site Pages}
+The TaleBlazer Analytics site allows users to view and download analytics data for their games. The front-end layout is accomplished using Bootstrap, a styling framework that provides a set of pre-styled elements, grid layout system, and extensible CSS classes. Extensive JavaScript is used to provide the behavior of the site, including the dynamic generation of UI elements, such as the tables for analytics data. 
 
-% \subsubsection{Overview}
-% \subsubsection{Games Played}
-% \subsubsection{Gameplay Duration}
-% \subsubsection{Agent Bumps}
-% \subsubsection{Custom Events}
-% \subsubsection{Data Download}
+The site is built with a focus on client-side page rendering. All relevant analytics data is retrieved via AJAX calls to the Data Analysis API of the analytics server (see \ref{subsec:collection_api}). A minimal amount of server-side HTML templating is performed to provide information such as when the game was first created and a list of its custom events, for filtering and navigation purposes. The site is also responsive: mobile and tablet devices can easily view information with a UI (user interface) suited to their device.
+
+\subsection{Analytics Pages}
+
+Analytics pages are the pages of the site that provide the different types of analytics data for each game. The analytics pages of the site correspond directly to each API in the Data Analysis API group (see \ref{subsec:analysis_api}). In particular, these pages are the:
+	\begin{itemize}
+		\item Overview Dashboard
+		\item Games Played Page
+		\item Gameplay Duration Page
+		\item Agent Bumps Page
+		\item Custom Events Pages
+	\end{itemize}
+All analytics pages share the same page loading behavior and common user interface elements. A typical analytics pages looks like Figure \ref{fig:games_played}, which shows the user interface for the Games Played page.
+
+\begin{figure}[htb]
+	\center{
+			\includegraphics[width=\textwidth]
+				{figures/games_played_page.png}
+			}
+	\caption{\label{fig:games_played} Games Played Page}
+\end{figure}
+
+\subsubsection{Page Rendering and Loading}
+
+The pages of the site all correspond directly to each API in the Data Analysis API group (see \ref{subsec:analysis_api}). For example, the Overview dashboard gets it HTML and analytics information from the Overview API.
+
+HTML requests to each API return a rendered HTML page with no embedded analytics data. On the server, the page is rendered by modularly composing a set of ECT templates. This results in a modular site and accomplishes maximum code reuse. The amount of server-side templating is minimal in order to ensure that the page is rendered and served to the client as fast as possible for short page load times.
+
+When the page is fully loaded, an AJAX (Asynchronous JavaScript and XML) call is made to the same API, which responds with the correspondng analytics data. The user interface of each page is then updated to reflect the new data. 
+
+The combination of fast page loads and AJAX calls for data ensure that the user is not stuck looking at a loading page while the analytics data is being calculated. It also eliminates page loads when filtering and categorization options are changed and new data is requested - the page's existing UI elements are simply updated when new data is received.
+
+\subsubsection{User Interface Elements}
+
+All analytics pages share common user interface elements, which not only maintain consistency throughout the site, but allow maximum reuse of code. This is a result of the modular construction of each page, as previously mentioned. The common user interface elements are the site navigation menu, the filter and categorization menu, and the data table. 
+
+\paragraph{Site Navigation Menu}
+
+The Site Navigation Menu is a collapsible menu with links to all pages containing analytics information for a particular game. Notably, it includes a dynamic list of the custom events belonging to the game in question. Figure \ref{fig:nav_menu} shows the user interface for the menu.
+
+\begin{figure}[htb]
+	\center{
+			\includegraphics[width=\textwidth]
+				{figures/nav_menu.png}
+			}
+	\caption{\label{fig:nav_menu} Side Navigation Menu}
+\end{figure}
+
+\paragraph{Filter Menu}
+
+The Filter Menu provides all the options for filtering and categorizing analytics data for all analytics pages. Excluding the Overview dashboard, users can choose from a pre-defined list of categories to categorize their data by. They can also manually define the date range of data they would like to look at. Additionally, they can choose from a set of pre-defined date ranges, including the option to view all data for the lifetime of the game. Figure \ref{fig:filter_menu} shows an example of the filter menu. 
+
+\begin{figure}[htb]
+	\center{
+			\includegraphics[width=\textwidth]
+				{figures/filter_menu.png}
+			}
+	\caption{\label{fig:filter_menu} Filter Menu}
+\end{figure}
+
+
+
+
+
+
 
 
 
