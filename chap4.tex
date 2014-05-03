@@ -110,6 +110,7 @@ All API endpoints require correct HTTP headers for requests. For example, the ``
 In addition to the status field in the JSON response, each endpoint also responds with the correct HTTP status codes. For example, a status code of 500 represents an internal server error. A status code of 201 represents that a resource was succesfully created. These status codes provide an additional way to check the status of an API request.
 
 \subsubsection{Data Collection API}
+\label{subsec:collection_api}
 
 The data collection API consists of all API endpoints that are involved in the process of gathering gameplay metrics from TaleBlazer Mobile. The data collection API consists of three resources: devices, sessions, and events. With respect to the process of data collection, the following endpoints are the most important:
 	\begin{itemize}
@@ -260,20 +261,47 @@ Nginx is a high-performance HTTP server which is often used as a reverse proxy o
 
 
 
-
-
-
 \section{TaleBlazer Analytics Client}
+
+This section provides the technical details of how the TaleBlazer Analytics is built and how it interacts with the analytics server to collect gameplay data. 
 
 \subsection{Technical Overview}
 
+The TaleBlazer Analytics client is standalone JavaScript module that handles the API workflow for collecting data from TaleBlazer Mobile. TaleBlazer Mobile implements the client's public API to track gameplay events. The client is then responsbile for the storage of gameplay data and for interacting with the analytics server to save those events. 
+
+The TaleBlazer Analytics client is designed to function in both offline and online capacities. TaleBlazer games can be played in offline situations, where internet connectivity is not available. In order to track this data, the analytics client stores all gameplay data locally until a data connection becomes available, at which point it sends the data to the server for storage.
+
 \subsection{API Workflow}
+
+The main job of the analytics client is to interact with the Data Collection API (see \ref{subsec:collection_api}) of the analytics server to track gameplay data gathered from TaleBlazer Mobile. To track data, a specific workflow has to be followed in order to ensure that data is collected from offline and online gameplay sessions. The general workflow is as follows:
+	\begin{description}
+		\item The mobile device is registered with the analytics server.
+		\item At the start of a new game, a session is requested from the analytics server.
+		\item Events are sent to the analytics server periodically based on certain conditions.
+	\end{description}
+Each step in this workflow requires that the prior steps be successfully completed. If a step fails, the client automatically retries the failed step periodically. [DIAGRAM MAYBE OF WORKFLOW?] For example, if a device is not registered with the server and a new game is started, the client will automatically attempt to register the device before requesting a session from the analytics server.
 
 \subsubsection{Device Registration}
 
+In order to determine unique events, it is necessary to register each mobile device with server. When TaleBlazer Mobile is launched, the client attempts to register the mobile device with the analytics server.
+If the device is sucessfully registered or the server responds that the device has already been registered, the client stores that information locally so as to avoid further unnecessary registration requests. The information sent up to the server is that mentioned in subsection \ref{subsec:device}. 
+
+In order to ensure that data is truly anonymous, a unique TaleBlazer Analytics specific device ID is generated from the device's ID. On iOS, this ID is an install-specific which changes if the user reinstalls the app. On Android, this could be the device's actual device ID, depending on the version of the OS. To generate a unique ID specific for our purposes, the retrieved device ID is hashed with the SHA-256 cryptographic algorithm. SHA-256 is a ``one-way'' cryptographic function - the generated text cannot be decrypted back to the original text. This unique generated string is used by the analytics server to uniquely identify devices. 
+
 \subsubsection{Session Request}
 
+In order to track gameplay sessions, a session has to be requested from the server at the start of a new game, with the information as defined in subsection \ref{subsec:session}. On a successful request, the server responds with a unique session ID, which the client stores locally. The session ID is used to tag events to identify them as having taken place during a particular session. Sessions can only be requested once the device has been registered, as each session is tied to the device being used.
+
+The TaleBlazer Analytics client also has to work in an offline capacity, ensuring that events are tracked and correctly recorded with the analytics server when network connectivity is reestablished. To this end, all sessions start off as ``local sessions'', each with a session ID unique to the device. Once the network becomes available, a ``network session'' is requested for each local session stored on the device. Local sessions are then converted to network sessions and any events tagged with the corresponding local session ID are updated to use the new network session ID. 
+
 \subsubsection{Event Tracking}
+
+Once a session has succesfully been
+
+
+
+
+
 
 
 
