@@ -25,7 +25,7 @@ This section provides an in-depth explanation of the technology and development 
 
 The TaleBlazer Analytics server is a Node.js web application that is responsible for collecting, proessing, and analyzing all the gameplay metrics received from TaleBlazer Mobile via the analytics client. The analytics server is built using Express, a web application framework that provides a robust library for building web services. The server follows the MVC (Model-View-Controller) development pattern for structuring the application. The server is a RESTful web service, which means that all external interactions with the server occur via REST (Representational State Transfer) APIs. [Cite REST]. MySQL is used as the backing database for analytics data.
 
-Strict development methodologies were adopted to ensure that the server is maintainable for future developers.To this end, the analytics server is maintainable, test-driven, standards-compliant, and extensively documented. The server was built to be easily configurable and simple to deploy in local, testing, and production environments. Deployment in production environments is simplified through the use of Nginx as a proxy server and comprehensive logging functionality.
+Strict development methodologies were adopted to ensure that the server is easily modifiable, extensible, and maintainable. To this end, the analytics server is testable, standards-compliant, and extensively documented. The server was built to be easily configurable and simple to deploy in local, testing, and production environments. Deployment in production environments is simplified through the use of Nginx as a proxy server and comprehensive logging functionality.
 
 \subsection{Server Structure}
 
@@ -208,7 +208,30 @@ Similar to the Agent Bumps API, the Custom Events API gives statistics as to how
 The Raw Data API is the sole exception to the standard JSON format. Instead of JSON, the Raw Data API responds with a CSV of all the raw event data for a particular game over a given date range. The purpose of this endpoint is to allow power users to work directly with the collected data to perform further analysis.
 
 
+\subsubsection{Development Methodology}
 
+In addition to the goal of collecting and analyzing gameplay data, a goal of the project was to develop a maintainable server that was easily modifiable and extensible in order to allow future developers to easily add features and continue building atop the platform. To this end, the analytics serve is testable, standards-compliant, and extensively documented.
+
+
+\paragraph{Test-Driven Development}
+
+The analytics server was developed according to the Test-Driven Development (TDD) methodology. This methodology emphasizes that tests for logical chunks of functionality be written first before starting development on the feature. As a result, the developer is forced to consider in-depth the behavior of the feature and the success and failure conditions. On completion of a feature, the tests are run and the feature deemed complete if all the tests pass. This results in a codebase with extensive test coverage. Furthermore, the overall test suite provides a way of verifying that changes to the codebase do not accidentally break functionality. 
+
+For the analytics server, this methodology resulted in extensive test coverage for the API. Tests were written using the Mocha testing framework and the SuperTest HTTP assertion library. These libraries emphasize readable and self-documenting tests. For example, Listing \ref{lst:mocha_example} shows how a test is written.
+
+\medskip
+\begin{lstlisting}[caption=Example Mocha test{,} testing that the Session API responds in JSON, label={lst:mocha_example}]
+	it('responds with json', function(done) {
+		request
+			.get('/session')
+			.set('Accept', 'application/json')
+			.expect('Content-Type', /json/)
+			.expect(200, done);
+	});
+\end{lstlisting}
+
+
+	
 
 
 
