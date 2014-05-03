@@ -269,6 +269,7 @@ The TaleBlazer Analytics client is standalone JavaScript module that handles the
 The TaleBlazer Analytics client is designed to function in both offline and online capacities. TaleBlazer games can be played in offline situations, where internet connectivity is not available. In order to track this data, the analytics client stores all gameplay data locally until a data connection becomes available, at which point it sends the data to the server for storage.
 
 \subsection{API Workflow}
+\label{subsec:api_workflow}
 
 The main job of the analytics client is to interact with the Data Collection API (see \ref{subsec:collection_api}) of the analytics server to track gameplay data gathered from TaleBlazer Mobile. To track data, a specific workflow has to be followed in order to ensure that data is collected from offline and online gameplay sessions. The general workflow is as follows:
 	\begin{description}
@@ -286,6 +287,7 @@ If the device is sucessfully registered or the server responds that the device h
 In order to ensure that data is truly anonymous, a unique TaleBlazer Analytics specific device ID is generated from the device's ID. On iOS, this ID is an install-specific which changes if the user reinstalls the app. On Android, this could be the device's actual device ID, depending on the version of the OS. To generate a unique ID specific for our purposes, the retrieved device ID is hashed with the SHA-256 cryptographic algorithm. SHA-256 is a ``one-way'' cryptographic function - the generated text cannot be decrypted back to the original text. This unique generated string is used by the analytics server to uniquely identify devices. 
 
 \subsubsection{Session Request}
+\label{subsubsec:session_request}
 
 In order to track gameplay sessions, a session has to be requested from the server at the start of a new game, with the information as defined in subsection \ref{subsec:session}. On a successful request, the server responds with a unique session ID, which the client stores locally. The session ID is used to tag events to identify them as having taken place during a particular session. Sessions can only be requested once the device has been registered, as each session is tied to the device being used.
 

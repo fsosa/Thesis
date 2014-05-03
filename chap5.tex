@@ -1,1 +1,40 @@
 \chapter{Testing}
+
+This chapter details the testing that was on the TaleBlazer Analytics system. It also gives the results of the tests and their consequences on the development process. 
+
+\section{Overview}
+
+The TaleBlazer Analytics system underwent a series of internal and external tests in order to test the robustness and accuracy of the data collection system. Two types of tests were performed: internal alpha tests and external beta tests. 
+
+Alpha tests were performed internally by the TaleBlazer team and focused on testing the performance of the client under adverse network connectivity conditions. They also focused on making sure that data was being collected properly. A beta test was performed with our partner institutions to test the system in a production capacity, as well as serving as an additional data collection test. 
+
+\section{Internal Alpha Tests}
+
+Multiple alpha tests were performed on the TaleBlazer Analytics system primarily to identify bugs and issues with the interaction between the analytics server and client. The main goal of these tests was to identify edge cases in the client's API workflow and to ensure that data was being persisted and sent to the server correctly (see \ref{subsec:api_workflow}). 
+
+A test TaleBlazer game was created that included every different type of possible interaction that could result in a trackable event. The game was tested by multiple members of the TaleBlazer team in varying network conditions on Android and iOS devices. The Android devices consisted of HTC Droid Incredible phones running Android 2.3.3, with and without an SD card present. The iOS devices included iPhone 4 and iPhone 5 phones, running iOS 6 and 7. 
+
+\subsection{Effects on Development}
+
+The alpha tests allowed us to identify multiple edge cases in the client's API workflow that resulted in malformed data to be sent to the server. This allowed us to harden the client's workflow to make it as robust as possible in the face of these unforeseen edge cases. 
+
+Alpha testing also alerted us to the need to track local sessions and events. As a result, the session request mechanism for the client was to implement the concepts of local and network sessions (see \ref{subsubsec:session_request}). This change not only gave us the ability to track local sessions, but it also made the client more reliable in the face of network connectivity issues. 
+
+\section{External Beta Test}
+
+After the alpha tests had been concluded, a beta test was performed primarily to test the performance of the system in a production capacity. Partner institutions were asked to participate and provide feedback on their experience. The test TaleBlazer game from the internal tests was modified to not only serve as a test for data collection, but also to introduce our partners to the way that the analytics system worked. Partners were asked to provide written logs of their in-game actions to allow us to verify the the accuracy of the collected data.
+
+\subsection{Effects on Development}
+
+The beta test allowed us to verify that data was being collected correctly and that the client was performing well on multiple types of Android and iOS devices. The most important result of the beta test was that it alerted us to issues with the deployment of the analytics server.
+
+For the tests, the analytics server was deployed to a port that was not port 80, typically used for HTTP connections. One tester ran into an issue where the server was not receiving any data from the testing devices. The logs showed that no connections were being received from those devices. We were then able to determine that the network in question restricted HTTP requests to port 80. As a result, this drove the adoption and deployment of Nginx as a proxy server, in order to allow connections to the analytics system from restrictive networks.
+
+
+
+
+
+
+
+
+
