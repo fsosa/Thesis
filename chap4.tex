@@ -2,7 +2,7 @@
 
 This chapter provides a high-level overview of the three different components that make up the TaleBlazer Analytics system: the analytics server, client, and website. The TaleBlazer Analytics system is described in its entirety, including specifics about each component and how the components work together to form the core of the analytics functionality. 
 
-\section{Technical Overview} 
+\section{System Overview} 
 
 TaleBlazer Analytics is composed of three different components that work together to gather, analyze, and present gameplay metrics for TaleBlazer games. The three components are: 
 	\begin{itemize}
@@ -258,10 +258,6 @@ The TaleBlazer Analytics server was deployed on the same machines as the existin
 
 Nginx is a high-performance HTTP server which is often used as a reverse proxy or load-balancer in front of other servers. A reverse proxy server is a server which retrieves information from other servers on behalf of a client making a request. In our particular case, Nginx allows TaleBlazer server and analytics to both respond to requests on port 80. It accomplishes this by performing requests to the respective server on behalf of the original client and then serving the request. Fitting with the goals of the project, Nginx is also easily deployed and configured. [MAYBE INCLUDE A FIGURE]
 
-
-
-
-
 \section{TaleBlazer Analytics Client}
 
 This section provides the technical details of how the TaleBlazer Analytics is built and how it interacts with the analytics server to collect gameplay data. 
@@ -308,13 +304,12 @@ The sections details the structure of the analytics site and its features. It al
 
 The TaleBlazer Analytics site allows users to view and download analytics data for their games. The front-end layout is accomplished using Bootstrap, a styling framework that provides a set of pre-styled elements, grid layout system, and extensible CSS classes. Extensive JavaScript is used to provide the behavior of the site, including the dynamic generation of UI elements, such as the tables for analytics data. 
 
-The site is built with a focus on client-side page rendering. All relevant analytics data is retrieved via AJAX calls to the Data Analysis API of the analytics server (see \ref{subsec:collection_api}). A minimal amount of server-side HTML templating is performed to provide information such as when the game was first created and a list of its custom events, for filtering and navigation purposes. The site is also responsive: mobile and tablet devices can easily view information with a UI (user interface) suited to their device.
+The site is built with a focus on client-side page rendering. All relevant analytics data is retrieved via AJAX calls to the Data Analysis API of the analytics server (see \ref{subsec:collection_api}). A minimal amount of server-side HTML templating is performed to provide information such as when the game was first created and a list of its custom events, for filtering and navigation purposes. The site is also responsive: mobile and tablet devices can easily view information with a UI (user interface) suited to their device. Users can also download the raw set of data from which all analytics are calculated.
 
 \subsection{Analytics Pages}
 
 Analytics pages are the pages of the site that provide the different types of analytics data for each game. The analytics pages of the site correspond directly to each API in the Data Analysis API group (see \ref{subsec:analysis_api}). In particular, these pages are the:
 	\begin{itemize}
-		\item Overview Dashboard
 		\item Games Played Page
 		\item Gameplay Duration Page
 		\item Agent Bumps Page
@@ -322,7 +317,7 @@ Analytics pages are the pages of the site that provide the different types of an
 	\end{itemize}
 All analytics pages share the same page loading behavior and common user interface elements. A typical analytics pages looks like Figure \ref{fig:games_played}, which shows the user interface for the Games Played page.
 
-\begin{figure}[htb]
+\begin{figure}[H]
 	\center{
 			\includegraphics[width=\textwidth]
 				{figures/games_played_page.png}
@@ -332,7 +327,7 @@ All analytics pages share the same page loading behavior and common user interfa
 
 \subsubsection{Page Rendering and Loading}
 
-The pages of the site all correspond directly to each API in the Data Analysis API group (see \ref{subsec:analysis_api}). For example, the Overview dashboard gets it HTML and analytics information from the Overview API.
+The pages of the site all correspond directly to each API in the Data Analysis API group (see \ref{subsec:analysis_api}). For example, the Agent Bumps Page gets it HTML and analytics information from the Agent Bumps API.
 
 HTML requests to each API return a rendered HTML page with no embedded analytics data. On the server, the page is rendered by modularly composing a set of ECT templates. This results in a modular site and accomplishes maximum code reuse. The amount of server-side templating is minimal in order to ensure that the page is rendered and served to the client as fast as possible for short page load times.
 
@@ -350,7 +345,7 @@ The Site Navigation Menu is a collapsible menu with links to all pages containin
 
 \begin{figure}[htb]
 	\center{
-			\includegraphics[width=\textwidth]
+			\includegraphics[scale=0.5]
 				{figures/nav_menu.png}
 			}
 	\caption{\label{fig:nav_menu} Side Navigation Menu}
@@ -358,15 +353,46 @@ The Site Navigation Menu is a collapsible menu with links to all pages containin
 
 \paragraph{Filter Menu}
 
-The Filter Menu provides all the options for filtering and categorizing analytics data for all analytics pages. Excluding the Overview dashboard, users can choose from a pre-defined list of categories to categorize their data by. They can also manually define the date range of data they would like to look at. Additionally, they can choose from a set of pre-defined date ranges, including the option to view all data for the lifetime of the game. Figure \ref{fig:filter_menu} shows an example of the filter menu. 
+The Filter Menu provides all the options for filtering and categorizing analytics data for all analytics pages. Users can choose from a pre-defined list of categories to categorize their data by. They can also manually define the date range of data they would like to look at. Additionally, they can choose from a set of pre-defined date ranges, including the option to view all data for the lifetime of the game. The list of categories can be modified or the option completely disabled on a page-by-page basis, as it is on the Overview Dashboard (Figure \ref{fig:overview_dashboard}). Figure \ref{fig:filter_menu} shows an example of the filter menu. 
 
-\begin{figure}[htb]
+\begin{figure}[hbt]
 	\center{
 			\includegraphics[width=\textwidth]
 				{figures/filter_menu.png}
 			}
-	\caption{\label{fig:filter_menu} Filter Menu}
+	\caption{\label{fig:filter_menu} Filter Menu, with the categorization option enabled}
 \end{figure}
+
+\paragraph{Data Table}
+
+Each analytics page displays its analytics data in the form of a data table. This data table is implemented using the DataTable JavaScript library. Analytics data tables are column-sortable and searchable across the entire set of results. Data tables paginate automatically based on the number of results. The user can optionally choose the number of results to view per data table page. Figure \ref{fig:data_table} shows what the data table for Agent Bump data, categorized by Agent looks like. 
+
+\begin{figure}[hbt]
+	\center{
+			\includegraphics[width=\textwidth]
+				{figures/data_table.png}
+			}
+	\caption{\label{fig:data_table} Data table for the Agent Bumps page, categorized by Agents}
+\end{figure}
+
+\subsubsection{Overview Dashboard}
+
+The Overview Dashboard is a unique analytics page as it does not include a categorization option or a data table. Instead, the Overview Dashboard provides a concise set of statistics detailing the performance of the game in the form of a grid. As before, users can choose the date range of data to get statistics for. Figure \ref{fig:overview_dashboard} shows the UI for the Overview Dashboard.
+
+\begin{figure}[hbt]
+	\center{
+			\includegraphics[width=\textwidth]
+				{figures/overview_dashboard.png}
+			}
+	\caption{\label{fig:overview_dashboard} Overview Dashboard}
+\end{figure}
+
+
+\subsection{Data Download}
+
+The analytics site also allows users to perform their own data analysis on the collected data. Users can download a CSV (Comma-Separated Value) file containing the set of all events that occurred over a particular time period. In particular, this file contains all Agent Bump, Region Switch, and Custom Events that occurred, as well as information about the session that they occurred in and the version of the game that was played. 
+
+This functionality allows users to not only perform data analysis on the events of a particular game, but also gives them the ability to view user behavior across separate games using the unique TaleBlazer Analytics device ID. 
 
 
 
