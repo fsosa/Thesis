@@ -25,7 +25,7 @@ This section provides an in-depth explanation of the technology and development 
 
 The TaleBlazer Analytics server is a Node.js web application that is responsible for collecting, proessing, and analyzing all the gameplay metrics received from TaleBlazer Mobile via the analytics client. The analytics server is built using Express, a web application framework that provides a robust library for building web services. The server follows the MVC (Model-View-Controller) development pattern for structuring the application. The server is a RESTful web service, which means that all external interactions with the server occur via REST (Representational State Transfer) APIs. [Cite REST]. MySQL is used as the backing database for analytics data.
 
-Strict development methodologies were adopted to ensure that the server is easily modifiable, extensible, and maintainable. To this end, the analytics server is testable, standards-compliant, and extensively documented. The server was built to be easily configurable and simple to deploy in local, testing, and production environments. Deployment in production environments is simplified through the use of Nginx as a proxy server and comprehensive logging functionality.
+Strict development methodologies were adopted to ensure that the server is easily modifiable, extensible, and maintainable. To this end, the analytics server is testable and extensively documented. The server was built to be easily configurable and simple to deploy in local, testing, and production environments. Deployment in production environments is simplified through the use of Nginx as a proxy server and comprehensive logging functionality.
 
 \subsection{Server Structure}
 
@@ -208,12 +208,12 @@ Similar to the Agent Bumps API, the Custom Events API gives statistics as to how
 The Raw Data API is the sole exception to the standard JSON format. Instead of JSON, the Raw Data API responds with a CSV of all the raw event data for a particular game over a given date range. The purpose of this endpoint is to allow power users to work directly with the collected data to perform further analysis.
 
 
-\subsubsection{Development Methodology}
+\subsection{Development Methodology}
 
-In addition to the goal of collecting and analyzing gameplay data, a goal of the project was to develop a maintainable server that was easily modifiable and extensible in order to allow future developers to easily add features and continue building atop the platform. To this end, the analytics serve is testable, standards-compliant, and extensively documented.
+In addition to the goal of collecting and analyzing gameplay data, a goal of the project was to develop a maintainable server that was easily modifiable and extensible in order to allow future developers to easily add features and continue building atop the platform. To this end, a test-driven methodology of development was adopted and stringent documentation standards were employed throughout development
 
 
-\paragraph{Test-Driven Development}
+\subsubsection{Test-Driven Development}
 
 The analytics server was developed according to the Test-Driven Development (TDD) methodology. This methodology emphasizes that tests for logical chunks of functionality be written first before starting development on the feature. As a result, the developer is forced to consider in-depth the behavior of the feature and the success and failure conditions. On completion of a feature, the tests are run and the feature deemed complete if all the tests pass. This results in a codebase with extensive test coverage. Furthermore, the overall test suite provides a way of verifying that changes to the codebase do not accidentally break functionality. 
 
@@ -229,6 +229,37 @@ For the analytics server, this methodology resulted in extensive test coverage f
 			.expect(200, done);
 	});
 \end{lstlisting}
+
+\subsubsection{Documentation}
+
+Documentation for the analytics server was a continuous and simultaneous process alongside development. The overall goal was to write clear and useful documentation. The codebase was documented in two ways. First, the code was written to be as self-documenting as possible, using clear and descriptive variable names. Code linters and style formatters were employed consistently throughout the development process to enhance readability and ensure style consistency throughout the various files. Second, comments were added to pieces of code that required further explanation, detailing specific processes or ideas further. For example, the ideas behind statistic calculations were expanded on in comments.
+
+In addition to the documentation inside the codebase, detailed step-by-step instructions were written explaining how to install and deploy the server. Documentation also included pre-built files for performing test API requests using an external utility and a file giving an overview of the database schema.
+
+This documentation standard was also employed for the development of the analytics client and site.
+
+\subsection{Installation and Deployment}
+
+\subsubsection{Configuration and Installation}
+
+To simplify future development and deployment, the server was built to be easily configurable and simple to deploy to any environment. Server configuration comes in the form of external JSON files and JavaScript modules that contain server and database configuration details. Example configuration files are provided to ease the setup process. 
+
+Installation and deployment to any environment is similarly simple. Developers simply checkout the project from a Git repository, fill in their configuration details, and run a single command to start the server. As a result, getting started developing for the analytics server is fast and easy. 
+
+\subsubsection{Logging}
+
+Logging functionality was implemented into the server in order to simplify troubleshooting in production and environments. Logging is handled via Winston, an asynchronous logging library for Node.js. To ease troubleshooting, error and request logs are saved to log directory, configurable by the developer. Error logs contain stacktraces, server performance statistics, and additional error-related information.
+
+\subsubsection{Deployment alongside TaleBlazer Server}
+
+The TaleBlazer Analytics server was deployed on the same machines as the existing TaleBlazer server. Early testing with our partners indicated that certain networks would restrict access via HTTP to sites on ports other than port 80. As a result, it was necessary to find a way to deploy TaleBlazer server and the analytics server alongside each other and have both servers respond to requests at port 80. Nginx was deployed as a reverse proxy server to accomplish this. 
+
+Nginx is a high-performance HTTP server which is often used as a reverse proxy or load-balancer in front of other servers. A reverse proxy server is a server which retrieves information from other servers on behalf of a client making a request. In our particular case, Nginx allows TaleBlazer server and analytics to both respond to requests on port 80. It accomplishes this by performing requests to the respective server on behalf of the original client and then serving the request. Fitting with the goals of the project, Nginx is also easily deployed and configured. [MAYBE INCLUDE A FIGURE]
+
+
+
+
+
 
 
 	
