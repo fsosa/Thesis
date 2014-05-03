@@ -35,8 +35,8 @@ A crucial step in developing the analytics server was deciding on the best way t
 Express is a minimal, non-opinionated framework that provides a framework for building web applications. It is built on top of the low-level Node.js HTTP module and provides a high-level API for handling all interactions having to do with HTTP requests. At its core, Express provides simple ways of routing URLs, parsing HTTP requests, sending HTTP responses, and defining paths for request processing via middleware. Defining what code to execute based on a request to a URL (routing) is simple using Express:
 
 \medskip
-\begin{lstlisting}[caption=Example Express Routing]
-// Responds to a GET request at /helloWorld with the text 'Hey there'
+\begin{lstlisting}[caption=Example of Express' URL routing]
+// Responds to a GET request at /helloWorld with the text 'Hey!'
 app.get('/helloWorld', function(res, req) {
 	res.send('Hey!');
 });
@@ -49,7 +49,7 @@ Express handles incoming requests by passing a request according to a defined pa
 Code in the analytics server is organized according to the Model-View-Controller (MVC) pattern, which allows us to separate code into logical components based on their functionality. Models represent database objects and contain retrieval and modification methods. Controllers handle incoming requests by retrieving information for specific models and sending the information the the requestor. Views contain the logic for the user interface and request information from controllers. 
 
 \paragraph{Models} 
-Models in the analytics server correspond directly to their respective database tables and allow us to easily perform queries on the database without having to write SQL. This is accomplished via Sequelize, an object-relational mapping (ORM) library, which handles the database connection and abstracts SQL queries by providing a high-level JavaScript API. Sequelize also provides migration functionality, which lets us make incremental changes to the database schema. 
+Models in the analytics server correspond directly to their respective database tables and allow us to easily perform queries on the database without having to write SQL. This is accomplished via Sequelize, an object-relational mapping (ORM) library, which handles the database connection and abstracts SQL queries and relations between tables by providing a high-level JavaScript API. Sequelize also provides migration functionality, which lets us make incremental changes to the database schema. Additionally, it performs model validation prior to making any database calls for an extra level of security.
 
 The models for TaleBlazer Server represent exactly the types of information as defined in section \ref{sec:analytics_data}, with the following exceptions and additions:
 
@@ -67,12 +67,157 @@ The models for TaleBlazer Server represent exactly the types of information as d
 \subparagraph{Games}
 	In the database (and the corresponding model), a game is represented by a Draft and a Draft State. Drafts contain information consistent throughout all versions of a game, such as the user who made it and the the most recent version of the game. Draft States represent versions of a game and contain information specific to a particular game version, such as the name of the game and its description. Draft States also contain the ID of the Draft that they belong to.
 
+% Need to differentiate this from the previous subparagraph
 \paragraph{Controllers} 
 
-Controllers for the analytics server handle, process, and respond to requests. Each controller provides the functions that get executed when a URL is requested. For example, requests for device information will always go through the device controller. 
-
+Controllers for the analytics server handle, process, and respond to requests. Each controller provides the functions that get executed when a URL is requested. For example, requests to register or get information about a device will always go through the device controller. In particular, controllers can be split up into two groups: data collection and data analysis controllers.
 
 \paragraph{Views}
+
+The analytics server also serves the analytics site and as such is responsible for providing the HTML, JavaScript, and CSS resources required for page of the analytics site. Dynamic page content for the analytics site is largely performed by client-side JavaScript. However, a minimal amount of HTML template rendering is performed on the server. Views correspond directly to these HTML templates, which contain the markup for the page layout. The ECT JavaScript template engine powers the template rendering and allows us to split up templates into logical components, thereby making it easier to modify the pages of the analytics site.
+
+
+\subsection{REST API}
+
+All external interactions with the analytics server occur through a REST API. All API endpoints return JSON (JavaScript Object Notation) and conform to a standard response format. For consistency and standards-compliance, each endpoint enforces that the correct HTTP headers be set and responds with the correct HTTP status code for the state of the response.
+
+The analytics server API endpoints are divided into two groups:
+	\begin{itemize}
+		\item the data collection API, used to collect data from TaleBlazer Mobile
+		\item the data analysis API, used to provide statistics for the analytics site
+	\end{itemize}
+
+
+\subsubsection{What is REST?}
+REST, standing for Representation State Transfer, is a style for building HTTP APIs, using the HTTP verbs (GET, POST, PUT, DELETE) as actions on resources. A resource can be thought of as a noun (e.g. the device resource). Basic CRUD (create, update, read, delete [maybe put in glossary]) operations can be performed by making a request to a resource using a particular format. For example, a GET request to \texttt{http://SITE/device/4} would return a device with id equal to 4. 
+
+\subsubsection{API Format}
+
+Each API endpoint responds with JSON formatted according to the JSEND format [CITE]. Each response object has a ``status'' key, which has a value of ``success'' or ``error'' depending on the outcome of the request. Successful response include a ``data'' key, which contains data pertinent to the original request. Failure responses include a ``message'' key, containing a Javascript Error object or human-readable string describing the error. Conforming to a standard response format makes it simpler to parse responses to API requests and maintains consistency throughout the project. Listing \ref{lst:jsend} gives an example of the response body of a succesful request to the device API.
+
+\medskip
+\begin{lstlisting}[caption=Example JSEND format, label={lst:jsend}]
+{
+    status : "success",
+    data : {
+        "device" : { "id" : 1, "model" : "iPhone 5", ...}
+     }
+}
+\end{lstlisting}
+
+All API endpoints require correct HTTP headers for requests. For example, the ``Content-Type'' header, which defines the format of parameters in the request body, must be set to ``application/json'' if in JSON format. Similarly, the ``Accepts'' header, which defines acceptable formats for the response, must be set to ``application/json'' in order for the response to return JSON. Again, this ensures that API requests behave consistently and correctly; inconsistent or undefined behavior often leads to bugs.
+
+In addition to the status field in the JSON response, each endpoint also responds with the correct HTTP status codes. For example, a status code of 500 represents an internal server error. A status code of 201 represents that a resource was succesfully created. These status codes provide an additional way to check the status of an API request.
+
+\subsubsection{Data Collection API}
+
+The data collection API consists of all API endpoints that are involved in the process of gathering gameplay metrics from TaleBlazer Mobile. The data collection API consists of three resources: devices, sessions, and events. With respect to the process of data collection, the following endpoints are the most important:
+	\begin{itemize}
+		\item Device Registration,
+		\item Session Requests,
+		\item Batch Event Processing
+	\end{itemize}
+
+\paragraph{Device Registration}
+
+The device registration API provides a way to register mobile devices with the analytics server. The endpoint takes a unique TaleBlazer Analytics ID and information about the device (as in \ref{subsec:device}).If successful, the API responds with a record of the newly registered device.
+
+\paragraph{Session Request}
+
+The session request API allows gameplay sessions to be recorded on the analytics server. It takes the device's unique TA ID and information about the session (as in \ref{subsec:session}). If the device has not already been registered with the analytics server, then the API sends back a failure response. Otherwise, it responds with a record of the newly created session, including the unique session ID used to tie events and sessions together.
+
+\paragraph{Batch Event Processing}
+
+The batch event processing API is the most complex in the data collection group. The batch event API takes a list of event objects, each corresponding to the types of events previously mentioned (e.g. agent bumps or region switches) and saves each event to the database. If a single event in the list of events is invalid or an error occurs while saving an event, then the entire request fails and the API responds with a failure. This is accomplished through the use of database transactions, which provide an ``all-or-nothing'' guarantee: either everything is saved or nothing is. This is beneficial because it alerts the API user that an error has occurred and that no data was saved. Otherwise, it would be difficult to tell what was saved to the database and what wasn't. As a result, it provides consistent ``fail-fast'' behavior for the API and avoids tracking possibly problematic data.
+
+\subsubsection{Data Analysis API}
+
+The data analysis API consists of the API endpoints that calculate and provide analytics data for the analytics site. Currently, all statistics are calculated on-the-fly when requested via the API. The data analytics API consists of the following endpoints:
+	\begin{itemize}
+		\item Overview
+		\item Games Played
+		\item Gameplay Duration
+		\item Agent Bumps
+		\item Custom Events
+		\item Raw Data
+	\end{itemize}
+
+Each API takes a start and end date representing the date range of data to analyze. Excluding the Overview API, they also take a categorization method, which categorizes the data based on one of the following:
+	\begin{itemize}
+		\item Date (Excluding the Agent Bumps API)
+		\item Role
+		\item Scenario
+		\item Game Version
+		\item Agent Bump (Only for the Agent Bumps API)
+	\end{itemize}
+
+\paragraph{Overview}
+
+The Overview API provides key statistics concerning the overall performance of a game. The statistics that are calculated include the number of games initiated, the number of games completed, the average time users took to complete a game, and the lifetime number of downloads. This information is calculated purely from information on the Session model (Section \ref{subsec:session}).
+
+\paragraph{Games Played}
+
+The Games Played API responds with information about the total number of games played. This is further broken down into non-overlapping groups:
+	\begin{itemize}
+		\item the number of games initiated (but not completed)
+		\item the number of games completed
+	\end{itemize}
+
+These statistics are calculated solely from information on the Session model, as in the Overview API.
+
+\paragraph{Gameplay Duration}
+
+The Gameplay Duration API provides statistics on the amount of time that people took to play a game. In particular, gameplay sessions are separated into buckets based on their gameplay time. Currently, sessions are bucketed into time ranges of 15 minutes, starting at 0 minutes and going up to 120 minutes. Listing \ref{lst:duration_response} demonstrates a sample response.
+
+\medskip
+\begin{lstlisting}[caption=Gameplay Duration API response{,} showing the number of sessions that fell within certain ranges of gameplay time{,} categorized by the Explorer role, label={lst:duration_response}]
+{
+  "status": "success",
+  "data": {
+    "results": [
+      {
+        "0-15": 3,
+        "15-30": 4,
+        "30-45": 0,
+        "45-60": 6,
+        "60-75": 3,
+        "75-90": 5,
+        "90-105": 1,
+        "105-120": 4,
+        "120+": 0,
+        "role": 1,
+        "entityName": "Explorer"
+      }
+    ]
+  }
+}
+\end{lstlisting}
+
+As before, all information is directly calculated from information on the Session model.
+
+\paragraph{Agent Bumps}
+
+The Agent Bumps API provides information about the number of times an agent was bumped, divided into unique bumps and total bumps by agent. Unique bumps are calculated by determining if a particular agent was bumped at all during a session. Further bumps then contribute to the number of total bumps. 
+
+\paragraph{Custom Events}
+
+Similar to the Agent Bumps API, the Custom Events API gives statistics as to how many unique and overall custom events were triggered. Unique and total events are calculated as in the Agent Bumps API. Due to the fact that custom events can have any set of values, custom events are further grouped by their particular value, in addition to the normal categorization options.
+
+\paragraph{Raw Data}
+
+The Raw Data API is the sole exception to the standard JSON format. Instead of JSON, the Raw Data API responds with a CSV of all the raw event data for a particular game over a given date range. The purpose of this endpoint is to allow power users to work directly with the collected data to perform further analysis.
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

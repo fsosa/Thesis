@@ -129,11 +129,11 @@ VSNC
             + Agent Bumps
             + Custom Events
             + Download Data
-            + 
 5. Testing (?)
     - Feedback from partners
     - iterative design process on site
     - survey info 
+    - that play test we did with partners and analytics beta test
 6. Future Work
     - Visualizations
     - Authentication/Authorization via TaleBlazer Server
@@ -143,5 +143,7 @@ VSNC
     - Use async library for future test
         + nested async callbacks often hard to read
         + async makes it easy to read
+    - Offline stat calculation (?)
+    - In-memory cache to avoid stat recalculation
 7. Conclusion
 
