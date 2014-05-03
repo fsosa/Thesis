@@ -275,11 +275,11 @@ The TaleBlazer Analytics client is designed to function in both offline and onli
 
 The main job of the analytics client is to interact with the Data Collection API (see \ref{subsec:collection_api}) of the analytics server to track gameplay data gathered from TaleBlazer Mobile. To track data, a specific workflow has to be followed in order to ensure that data is collected from offline and online gameplay sessions. The general workflow is as follows:
 	\begin{description}
-		\item The mobile device is registered with the analytics server.
-		\item At the start of a new game, a session is requested from the analytics server.
-		\item Events are sent to the analytics server periodically based on certain conditions.
+		\item[First] The mobile device is registered with the analytics server.
+		\item[Second] At the start of a new game, a session is requested from the analytics server.
+		\item[Third] Events are periodically sent to the analytics server in batches
 	\end{description}
-Each step in this workflow requires that the prior steps be successfully completed. If a step fails, the client automatically retries the failed step periodically. [DIAGRAM MAYBE OF WORKFLOW?] For example, if a device is not registered with the server and a new game is started, the client will automatically attempt to register the device before requesting a session from the analytics server.
+Each step in this workflow requires that the prior steps be successfully completed. If a step fails, the client automatically retries the failed step periodically. [DIAGRAM MAYBE OF WORKFLOW?] For example, if a device is not registered with the server and a new game is started, the client will automatically attempt to register the device before requesting a session from the analytics server. In the case of TaleBlazer games played offline or in low connectivity situations, the client generates local sessions to be able to track events. The above workflow is then performed once network connectivity is regained in order to record data with the analytics server.
 
 \subsubsection{Device Registration}
 
@@ -295,28 +295,24 @@ In order to track gameplay sessions, a session has to be requested from the serv
 The TaleBlazer Analytics client also has to work in an offline capacity, ensuring that events are tracked and correctly recorded with the analytics server when network connectivity is reestablished. To this end, all sessions start off as ``local sessions'', each with a session ID unique to the device. Once the network becomes available, a ``network session'' is requested for each local session stored on the device. Local sessions are then converted to network sessions and any events tagged with the corresponding local session ID are updated to use the new network session ID. 
 
 \subsubsection{Event Tracking}
+Once a session has been succesfully established, events can be tracked and recorded with the server. Each event is tagged with the session ID it occurred in and the time the event took place, as well event-specific information (see \ref{sec:analytics_data}). Events are added to a queue and sent up periodically to the server in batches of configurable size. This minimizes the amount of network requests performed and the data sent, as each request includes overhead from HTTP headers. 
 
-Once a session has succesfully been
-
-
-
-
-
-
-
+Events are persisted locally in order to persist through application and device restarts, as well as to ensure that data is not lost in the face of spotty network connectivity. This allows event data from offline events to be kept and automatically sent to the server when network connectivity becomes available.
 
 \section{TaleBlazer Analytics Site}
 
+
+
 \subsection{Technical Overview}
 
-\subsection{Site Pages}
+% \subsection{Site Pages}
 
-\subsubsection{Overview}
-\subsubsection{Games Played}
-\subsubsection{Gameplay Duration}
-\subsubsection{Agent Bumps}
-\subsubsection{Custom Events}
-\subsubsection{Data Download}
+% \subsubsection{Overview}
+% \subsubsection{Games Played}
+% \subsubsection{Gameplay Duration}
+% \subsubsection{Agent Bumps}
+% \subsubsection{Custom Events}
+% \subsubsection{Data Download}
 
 
 
