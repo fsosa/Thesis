@@ -1,7 +1,7 @@
 %!TEX root = main.tex
 \chapter{Testing}
 
-This chapter details the testing that was on the TaleBlazer Analytics system. It also gives the results of the tests and their consequences on the development process. 
+This chapter details the testing that was performed on the TaleBlazer Analytics system. It also gives the results of the tests and their consequences on the development process. 
 
 \section{Overview}
 
@@ -11,7 +11,7 @@ Alpha tests were performed internally by the TaleBlazer team and focused on test
 
 \section{Internal Alpha Tests}
 
-Multiple alpha tests were performed on the TaleBlazer Analytics system primarily to identify bugs and issues with the interaction between the analytics server and client. The main goal of these tests was to identify edge cases in the client's API workflow and to ensure that data was being persisted and sent to the server correctly (see \ref{subsec:api_workflow}). 
+Multiple alpha tests were performed on the TaleBlazer Analytics system primarily to identify bugs and issues with the interaction between the analytics server and client. The main goal of these tests was to identify edge cases in the client's API workflow and to ensure that data was being persisted and sent to the server correctly. 
 
 A test TaleBlazer game was created that included every different type of possible interaction that could result in a trackable event. The game was tested by multiple members of the TaleBlazer team in varying network conditions on Android and iOS devices. The Android devices consisted of HTC Droid Incredible phones running Android 2.3.3, with and without an SD card present. The iOS devices included iPhone 4 and iPhone 5 phones, running iOS 6 and 7. 
 
@@ -19,7 +19,7 @@ A test TaleBlazer game was created that included every different type of possibl
 
 The alpha tests allowed us to identify multiple edge cases in the client's API workflow that resulted in malformed data to be sent to the server. This allowed us to harden the client's workflow to make it as robust as possible in the face of these unforeseen edge cases. 
 
-Alpha testing also alerted us to the need to track local sessions and events. As a result, the session request mechanism for the client was to implement the concepts of local and network sessions (see \ref{subsubsec:session_request}). This change not only gave us the ability to track local sessions, but it also made the client more reliable in the face of network connectivity issues. 
+Alpha testing also alerted us to the need to track local sessions and events. As a result, the session request mechanism for the client was modified to implement the concepts of local and network sessions (see \ref{subsubsec:session_request}). This change not only gave us the ability to track local sessions, but it also made the client more reliable in the face of network connectivity issues. 
 
 \section{External Beta Test}
 
