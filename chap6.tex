@@ -14,7 +14,7 @@ Data visualizations would allow users to quickly interpret and draw conclusions 
 			\includegraphics[width=\textwidth]
 				{figures/num_completed_viz.png}
 			}
-	\caption{\label{fig:num_completed_viz} Distribution of Total Players by Game Version, over a week}
+	\caption[Example Data Visualization]{\label{fig:num_completed_viz} Distribution of Total Players by Game Version, over a week}
 \end{figure}
 
 The TaleBlazer Analytics system was built to accommodate visualizations from the start of its development. The relevant data is already provided in JSON via the same API call that allows pages to retrieve their relevant analytics data. Visualization implementation is easily accomplished via D3.js. D3.js is a popular JavaScript visualization library that provides functionality for creating visualizations. 
@@ -44,7 +44,7 @@ A Service layer would remove model-specific code from controllers and place them
 The \texttt{async} JavaScript library provides a set of utility functions which handle common asynchronous tasks. The asynchronous nature of JavaScript code and Node results in multiple levels of callback functions, which is often difficult to read and modify. The async library solves this issue by providing a powerful set of utility functions that improve the readability of the code. Compare the readability of the two functions in Listing \ref{lst:async}, which perform the same tasks. 
 
 \medskip
-\begin{lstlisting}[caption=Comparison between normal callback code and async code, label={lst:async}]
+\begin{lstlisting}[caption={[Typical Nested Code vs \texttt{async} library]Comparison between normal callback code and \texttt{async} code}, label={lst:async}]
 // Nested callbacks
 // Each function waits on the results of the previous one before continuing
 performAction1(function(){

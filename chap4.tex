@@ -24,7 +24,7 @@ This section provides an in-depth explanation of the technology and development 
 
 \subsection{Technical Overview}
 
-The TaleBlazer Analytics server is a Node.js web application that is responsible for collecting, proessing, and analyzing all the gameplay metrics received from TaleBlazer Mobile via the analytics client. The analytics server is built using Express, a web application framework that provides a robust library for building web services. The server follows the MVC (Model-View-Controller) development pattern for structuring the application. The server is a RESTful web service, which means that all external interactions with the server occur via REST (Representational State Transfer) APIs. [Cite REST]. MySQL is used as the backing database for analytics data.
+The TaleBlazer Analytics server is a Node.js web application that is responsible for collecting, proessing, and analyzing all the gameplay metrics received from TaleBlazer Mobile via the analytics client. The analytics server is built using Express, a web application framework that provides a robust library for building web services. The server follows the MVC (Model-View-Controller) development pattern for structuring the application. The server is a RESTful web service, which means that all external interactions with the server occur via REST (Representational State Transfer) APIs. \cite{site:rest} MySQL is used as the backing database for analytics data.
 
 Strict development methodologies were adopted to ensure that the server is easily modifiable, extensible, and maintainable. To this end, the analytics server is testable and extensively documented. The server was built to be easily configurable and simple to deploy in local, testing, and production environments. Deployment in production environments is simplified through the use of Nginx as a proxy server and comprehensive logging functionality.
 
@@ -36,7 +36,7 @@ A crucial step in developing the analytics server was deciding on the best way t
 Express is a minimal, non-opinionated framework that provides a framework for building web applications. It is built on top of the low-level Node.js HTTP module and provides a high-level API for handling all interactions having to do with HTTP requests. At its core, Express provides simple ways of routing URLs, parsing HTTP requests, sending HTTP responses, and defining paths for request processing via middleware. Defining what code to execute based on a request to a URL (routing) is simple using Express:
 
 \medskip
-\begin{lstlisting}[caption=Example of Express' URL routing]
+\begin{lstlisting}[caption={[Express URL Routing Example]Example of Express' URL routing}]
 // Responds to a GET request at /helloWorld with the text 'Hey!'
 app.get('/helloWorld', function(res, req) {
 	res.send('Hey!');
@@ -94,10 +94,10 @@ REST, standing for Representation State Transfer, is a style for building HTTP A
 
 \subsubsection{API Format}
 
-Each API endpoint responds with JSON formatted according to the JSEND format [CITE]. Each response object has a ``status'' key, which has a value of ``success'' or ``error'' depending on the outcome of the request. Successful response include a ``data'' key, which contains data pertinent to the original request. Failure responses include a ``message'' key, containing a Javascript Error object or human-readable string describing the error. Conforming to a standard response format makes it simpler to parse responses to API requests and maintains consistency throughout the project. Listing \ref{lst:jsend} gives an example of the response body of a succesful request to the device API.
+Each API endpoint responds with JSON formatted according to the JSEND format. \cite{site:jsend} Each response object has a ``status'' key, which has a value of ``success'' or ``error'' depending on the outcome of the request. Successful response include a ``data'' key, which contains data pertinent to the original request. Failure responses include a ``message'' key, containing a Javascript Error object or human-readable string describing the error. Conforming to a standard response format makes it simpler to parse responses to API requests and maintains consistency throughout the project. Listing \ref{lst:jsend} gives an example of the response body of a succesful request to the device API.
 
 \medskip
-\begin{lstlisting}[caption=Example JSEND format, label={lst:jsend}]
+\begin{lstlisting}[caption={[API Response Format Example]Example API format, using JSEND}, label={lst:jsend}]
 {
     status : "success",
     data : {
@@ -173,7 +173,7 @@ These statistics are calculated solely from information on the Session model, as
 The Gameplay Duration API provides statistics on the amount of time that people took to play a game. In particular, gameplay sessions are separated into buckets based on their gameplay time. Currently, sessions are bucketed into time ranges of 15 minutes, starting at 0 minutes and going up to 120 minutes. Listing \ref{lst:duration_response} demonstrates a sample response.
 
 \medskip
-\begin{lstlisting}[caption=Gameplay Duration API response{,} showing the number of sessions that fell within certain ranges of gameplay time{,} categorized by the Explorer role, label={lst:duration_response}]
+\begin{lstlisting}[caption={[Gameplay Duration API Response Example]Gameplay Duration API response{,} showing the number of sessions that fell within certain ranges of gameplay time{,} categorized by the Explorer role}, label={lst:duration_response}]
 {
   "status": "success",
   "data": {
@@ -223,7 +223,7 @@ The analytics server was developed according to the Test-Driven Development (TDD
 For the analytics server, this methodology resulted in extensive test coverage for the API. Tests were written using the Mocha testing framework and the SuperTest HTTP assertion library. These libraries emphasize readable and self-documenting tests. For example, Listing \ref{lst:mocha_example} shows how a test is written.
 
 \medskip
-\begin{lstlisting}[caption=Example Mocha test{,} testing that the Session API responds in JSON, label={lst:mocha_example}]
+\begin{lstlisting}[caption={[Example API Test]Example Mocha test{,} testing that the Session API responds in JSON}, label={lst:mocha_example}]
 	it('responds with json', function(done) {
 		request
 			.get('/session')
@@ -257,7 +257,7 @@ Logging functionality was implemented into the server in order to simplify troub
 
 The TaleBlazer Analytics server was deployed on the same machines as the existing TaleBlazer server. Early testing with our partners indicated that certain networks would restrict access via HTTP to sites on ports other than port 80. As a result, it was necessary to find a way to deploy TaleBlazer server and the analytics server alongside each other and have both servers respond to requests at port 80. Nginx was deployed as a reverse proxy server to accomplish this. 
 
-Nginx is a high-performance HTTP server which is often used as a reverse proxy or load-balancer in front of other servers. A reverse proxy server is a server which retrieves information from other servers on behalf of a client making a request. In our particular case, Nginx allows TaleBlazer server and analytics to both respond to requests on port 80. It accomplishes this by performing requests to the respective server on behalf of the original client and then serving the request. Fitting with the goals of the project, Nginx is also easily deployed and configured. [MAYBE INCLUDE A FIGURE]
+Nginx is a high-performance HTTP server which is often used as a reverse proxy or load-balancer in front of other servers. A reverse proxy server is a server which retrieves information from other servers on behalf of a client making a request. In our particular case, Nginx allows TaleBlazer server and analytics to both respond to requests on port 80. It accomplishes this by performing requests to the respective server on behalf of the original client and then serving the request. Fitting with the goals of the project, Nginx is also easily deployed and configured.
 
 \section{TaleBlazer Analytics Client}
 
@@ -325,7 +325,7 @@ All analytics pages share the same page loading behavior and common user interfa
 			\includegraphics[width=\textwidth]
 				{figures/games_played_page.png}
 			}
-	\caption{\label{fig:games_played} Games Played Page}
+	\caption[Analytics Site: ``Games Played'' UI]{\label{fig:games_played} Games Played Page}
 \end{figure}
 
 \subsubsection{Page Rendering and Loading}
@@ -351,7 +351,7 @@ The Site Navigation Menu is a collapsible menu with links to all pages containin
 			\includegraphics[scale=0.5]
 				{figures/nav_menu.png}
 			}
-	\caption{\label{fig:nav_menu} Side Navigation Menu}
+	\caption[Analytics Site: Side Navigation Menu]{\label{fig:nav_menu} Side Navigation Menu}
 \end{figure}
 
 \paragraph{Filter Menu}
@@ -363,7 +363,7 @@ The Filter Menu provides all the options for filtering and categorizing analytic
 			\includegraphics[width=\textwidth]
 				{figures/filter_menu.png}
 			}
-	\caption{\label{fig:filter_menu} Filter Menu, with the categorization option enabled}
+	\caption[Analytics Site: Filter Menu]{\label{fig:filter_menu} Filter Menu, with the categorization option enabled}
 \end{figure}
 
 \paragraph{Data Table}
@@ -375,7 +375,7 @@ Each analytics page displays its analytics data in the form of a data table. Thi
 			\includegraphics[width=\textwidth]
 				{figures/data_table.png}
 			}
-	\caption{\label{fig:data_table} Data table for the Agent Bumps page, categorized by Agents}
+	\caption[Analytics Site: Agent Bumps Data Table]{\label{fig:data_table} Data table for the Agent Bumps page, categorized by Agents}
 \end{figure}
 
 \subsubsection{Overview Dashboard}
@@ -387,7 +387,7 @@ The Overview Dashboard is a unique analytics page as it does not include a categ
 			\includegraphics[width=\textwidth]
 				{figures/overview_dashboard.png}
 			}
-	\caption{\label{fig:overview_dashboard} Overview Dashboard}
+	\caption[Analytics Site: Overview Dashboard]{\label{fig:overview_dashboard} Overview Dashboard}
 \end{figure}
 
 
