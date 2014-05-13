@@ -7,13 +7,15 @@ This chapter details the testing that was performed on the TaleBlazer Analytics 
 
 The TaleBlazer Analytics system underwent a series of internal and external tests in order to test the robustness and accuracy of the data collection system. Two types of tests were performed: internal alpha tests and external beta tests. 
 
-Alpha tests were performed internally by the TaleBlazer team and focused on testing the performance of the client under adverse network connectivity conditions. They also focused on making sure that data was being collected properly. A beta test was performed with our partner institutions to test the system in a production capacity, as well as serving as an additional data collection test. 
+Alpha tests were performed internally by the TaleBlazer team and focused on testing the performance of the client under adverse network connectivity conditions. They also focused on making sure that data was being collected properly. A beta test was performed with our partner institutions to test the system in a production capacity, as well as serving as an additional data collection test. Finally, a user interface test was performed with our partner institutions to get their feedback on the final analytics site.
 
 \section{Internal Alpha Tests}
 
-Multiple alpha tests were performed on the TaleBlazer Analytics system primarily to identify bugs and issues with the interaction between the analytics server and client. The main goal of these tests was to identify edge cases in the client's API workflow and to ensure that data was being persisted and sent to the server correctly. 
+Multiple and extensive alpha tests were performed on the TaleBlazer Analytics system primarily to identify bugs and issues with the interaction between the analytics server and client. The main goal of these tests was to identify edge cases in the client's API workflow and to ensure that data was being persisted and sent to the server correctly.
 
 A test TaleBlazer game was created that included every different type of possible interaction that could result in a trackable event. The game was tested by multiple members of the TaleBlazer team in varying network conditions on Android and iOS devices. The Android devices consisted of HTC Droid Incredible phones running Android 2.3.3, with and without an SD card present. The iOS devices included iPhone 4 and iPhone 5 phones, running iOS 6 and 7. 
+
+Each test lasted about 30 minutes. Testers were asked to play the test game simultaneously as they would normally play a TaleBlazer game. Each tester was asked to write down the time and order in which agents were bumped and actions were taken. This information was then compared against the data analytics that were captured. 
 
 \subsection{Effects on Development}
 
@@ -30,6 +32,24 @@ After the alpha tests had been concluded, a beta test was performed primarily to
 The beta test allowed us to verify that data was being collected correctly and that the client was performing well on multiple types of Android and iOS devices. The most important result of the beta test was that it alerted us to issues with the deployment of the analytics server.
 
 For the tests, the analytics server was deployed to a port that was not port 80, typically used for HTTP connections. One tester ran into an issue where the server was not receiving any data from the testing devices. The logs showed that no connections were being received from those devices. We were then able to determine that the network in question restricted HTTP requests to port 80. As a result, this drove the adoption and deployment of Nginx as a proxy server, in order to allow connections to the analytics system from restrictive networks.
+
+\section{Final User Interface Test}
+
+After the external beta test had concluded, partners were directed to the final deployed version of the analytics site. Partners were provided with minimal instruction on how to use the site, in order to determine the site's usability and what elements were unclear to new users. In addition to requesting general feedback, partners were asked the following questions:
+
+\begin{itemize}
+	\item Is there any data you are interested in that is not currently being collected?
+	\item Is the graphical user interface (GUI) intuitive? 
+	\item Is the data displayed in a useful way? 
+	\item Are there additional views of the data that would be useful to you?
+	\item Are there misleading labels or elements on the site?
+	\item Is the downloaded raw analytics data in a file format useful to you?
+\end{itemize}
+
+\subsection{Results}
+
+In terms of the data, partners felt that the data being collected was indeed useful to their purposes. One of the most requested features was the addition of visualizations in order to make the data simpler to understand. Additionally, partners felt that help or tutorial elements be added in order to explain certain data labels and functions of the site. Interestingly, some partners requested features that were implemented in the custom events system, indicating that an FAQ or help section would be incredibly useful in on-boarding new users. Overall, the test indicated that partners found the site useful and that the user interface could use minor tweaks in order to make it simpler to use, specifically emphasizing the creation of help or tutorial pages.
+
 
 
 
