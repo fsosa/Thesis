@@ -238,9 +238,9 @@ Logging functionality was implemented into the server in order to simplify troub
 
 \subsubsection{Deployment alongside TaleBlazer Server}
 
-The TaleBlazer Analytics server was deployed on the same machines as the existing TaleBlazer server. Early testing with our partners indicated that certain networks would restrict access via HTTP to sites on ports other than port 80. As a result, it was necessary to find a way to deploy TaleBlazer Server and the analytics server alongside each other and have both servers respond to requests at port 80. Nginx was deployed as a reverse proxy server to accomplish this. 
+The TaleBlazer Analytics server was deployed on the same machines as the existing TaleBlazer server. Early testing with our partners indicated that certain networks would restrict access via HTTP to sites on ports other than port 80. As a result, it was necessary to find a way to deploy TaleBlazer Server and the analytics server alongside each other and have both servers respond to requests at port 80. Navigationx was deployed as a reverse proxy server to accomplish this. 
 
-Nginx is a high-performance HTTP server which is often used as a reverse proxy or load-balancer in front of other servers. A reverse proxy server is a server which retrieves information from other servers on behalf of a client making a request. In our particular case, Nginx allows TaleBlazer Server and the analytics server to both respond to requests on port 80. It accomplishes this by performing requests to the respective server on behalf of the original client and then serving the request. Fitting with the goals of the project, Nginx is also easily deployed and configured.
+Nginx is a high-performance HTTP server which is often used as a reverse proxy or load-balancer in front of other servers. A reverse proxy server is a server which retrieves information from other servers on behalf of a client making a request. In our particular case, Nginx allows TaleBlazer Server and the analytics server to both respond to requests on port 80. It accomplishes this by performing requests to the respective server on behalf of the original client and then serving the request. Fitting with the goals of the project, Nginx is also easily deployed and configured. To ease future deployment, the configuration and deployment process was extensively documented.
 
 \section{TaleBlazer Analytics Client}
 
@@ -272,8 +272,7 @@ In order to determine unique events, it is necessary to register each mobile dev
 
 In order to ensure that data is truly anonymous, a unique TaleBlazer Analytics ID is generated from the device's ID. On iOS, this ID is installation specific and changes if the user reinstalls the app. On Android, this could be the device's actual device ID, depending on the version of the OS. To generate a unique ID for TaleBlazer Analytics, the retrieved device ID is hashed with the SHA-256 cryptographic algorithm. SHA-256 is a ``one-way'' cryptographic function - the generated text cannot be decrypted back to the original text. This unique generated string is used by the analytics server to uniquely identify devices. 
 
-\subsubsection{Session Request}
-\label{subsubsec:session_request}
+\subsubsection{Session Request} \label{subsubsec:session_request}
 
 In order to track gameplay sessions, a session has to be requested from the server at the start of a new game. On a successful request, the server responds with a unique session ID, which the client stores locally. The session ID is used to tag events to identify them as having taken place during a particular session. Sessions can only be requested once the device has been registered, as each session is tied to the device being used.
 
@@ -294,7 +293,7 @@ This sections details the structure of the analytics site and its features. It a
 
 The TaleBlazer Analytics site allows users to view and download analytics data for their games. The front-end layout is accomplished using Bootstrap, a styling framework that provides a set of pre-styled elements, grid layout system, and extensible CSS classes. JavaScript is used to provide the behavior of the site, including the dynamic generation of UI elements, such as the tables for analytics data. 
 
-The site is built with a focus on client-side page rendering. All relevant analytics data is retrieved via AJAX calls to the Data Analysis API of the analytics server. A minimal amount of server-side HTML templating is performed to provide information such as when the game was first created and a list of its custom events, for filtering and navigation purposes. The site is also responsive - mobile and tablet devices can easily view information with a UI (user interface) suited to their device. Users can also download the raw set of data from which all analytics are calculated.
+The site is built with a focus on client-side page rendering. All relevant analytics data is retrieved via AJAX calls to the Data Analysis API of the analytics server. A minimal amount of server-side HTML templating is performed to provide information such as when the game was first created and a list of its custom events, for filtering and navigation purposes. The site is also responsive - mobile and tablet devices can easily view information with a UI (user interface) suited to their device. Additionally, users can also download the raw set of analytics data.
 
 \subsection{Analytics Pages}
 
@@ -305,9 +304,10 @@ Analytics pages are the pages of the site that provide the different types of an
 		\item Agent Bumps Page
 		\item Custom Events Pages
 	\end{itemize}
-All analytics pages share the same page loading behavior and common user interface elements. A typical analytics pages looks like Figure \ref{fig:games_played}, which shows the user interface for the Games Played page.
+All analytics pages share the same page loading behavior and common user interface elements. A typical analytics pages looks like Figure \ref{fig:games_played}, which shows the user interface for the Games Played page. Appendix A contains figures for all analytics pages.
 
-\begin{figure}[H]
+\medskip
+\begin{figure}[htb]
 	\center{
 			\includegraphics[width=\textwidth]
 				{figures/games_played_page.png}
@@ -345,7 +345,7 @@ The Site Navigation Menu is a collapsible menu with links to all pages containin
 
 The Filter Menu provides all the options for filtering and categorizing analytics data for all analytics pages. Users can choose from a pre-defined list of categories to categorize their data by. They can also manually define the date range of data they would like to look at. Additionally, they can choose from a set of pre-defined date ranges, including the option to view all data for the lifetime of the game. The list of categories can be modified or the option completely disabled on a page-by-page basis, as it is on the Overview Dashboard (Figure \ref{fig:overview_dashboard}). Figure \ref{fig:filter_menu} shows an example of the filter menu. 
 
-\begin{figure}[hbt]
+\begin{figure}[htb]
 	\center{
 			\includegraphics[width=\textwidth]
 				{figures/filter_menu.png}
@@ -357,7 +357,7 @@ The Filter Menu provides all the options for filtering and categorizing analytic
 
 Each analytics page displays its analytics data in the form of a data table. This data table is implemented using the DataTable JavaScript library. Analytics data tables are column-sortable and searchable across the entire set of results. Data tables paginate automatically based on the number of results. The user can optionally choose the number of results to view per data table page. Figure \ref{fig:data_table} shows what the data table for Agent Bump data, categorized by Agent looks like. 
 
-\begin{figure}[hbt]
+\begin{figure}[htb]
 	\center{
 			\includegraphics[width=\textwidth]
 				{figures/data_table.png}
@@ -369,7 +369,7 @@ Each analytics page displays its analytics data in the form of a data table. Thi
 
 The Overview Dashboard is a unique analytics page as it does not include a categorization option or a data table. Instead, the Overview Dashboard provides a concise set of statistics detailing the performance of the game in the form of a grid. As before, users can choose the date range of data to get statistics for. Figure \ref{fig:overview_dashboard} shows the UI for the Overview Dashboard.
 
-\begin{figure}[hbt]
+\begin{figure}[H]
 	\center{
 			\includegraphics[width=\textwidth]
 				{figures/overview_dashboard.png}
