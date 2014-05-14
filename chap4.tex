@@ -24,7 +24,7 @@ This section provides an in-depth explanation of the technology and development 
 
 \subsection{Technical Overview}
 
-The TaleBlazer Analytics server is a Node.js web application that is responsible for collecting, processing, and analyzing all the gameplay metrics received from TaleBlazer Mobile via the analytics client. The analytics server is built using Express, a web application framework that provides a robust library for building web services. The server follows the MVC development pattern for structuring the application. The server is a RESTful web service, which means that all external interactions with the server occur via REST APIs. MySQL is used as the backing database for analytics data.
+The TaleBlazer Analytics server is a Node.js web application that is responsible for collecting, processing, and analyzing all the gameplay metrics received from TaleBlazer Mobile via the analytics client. The analytics server is built using Express, a web application framework that provides a robust library for building web services. The server follows the MVC development pattern for structuring the application. The server is a RESTful web service, which means that all external interactions with the server occur via REST APIs. MySQL is used as the backing database for analytics data, in order to integrate with the existing TaleBlazer Server database.
 
 Strict development methodologies were adopted to ensure that the server is easily modifiable, extensible, and maintainable. To this end, the analytics server is testable and extensively documented. The server was built to be easily configurable and simple to deploy in local, testing, and production environments. Deployment in production environments alongside TaleBlazer Server is accomplished through the use of Nginx as a proxy server.
 
@@ -88,7 +88,7 @@ Each API endpoint responds with JSON formatted according to the JSEND format. \c
 }
 \end{lstlisting}
 
-All API endpoints require correct HTTP headers for requests. For example, the \texttt{Content-Type} header, which defines the format of parameters in the request body, must be set to \texttt{application/json}, if the request body is in JSON format. Similarly, the \texttt{Accepts} header, which defines acceptable formats for the response, must be set to \texttt{application/json} in order for the response to return JSON. Again, this ensures that API requests behave consistently and correctly as inconsistent or undefined behavior often leads to bugs.
+All API endpoints require correct HTTP headers for requests. For example, the \texttt{Content-Type} header, which defines the format of parameters in the request body, must be set to \texttt{application/json}, if the request body is in JSON format. Similarly, the \texttt{Accepts} header, which defines acceptable formats for the response, must be set to \texttt{application/json} in order for the response to return JSON. Again, this ensures that API requests behave consistently and correctly as inconsistent or undefined behavior often leads to bugs or exploits.
 
 In addition to the status field in the JSON response, each endpoint also responds with the correct HTTP status codes. For example, a status code of 500 represents an internal server error. A status code of 201 represents that a resource was successfully created. These status codes provide an additional way to check the status of an API request.
 
@@ -187,7 +187,7 @@ The Agent Bumps API provides information about the number of times all agents we
 
 \paragraph{Custom Events}
 
-Similar to the Agent Bumps API, the Custom Events API gives statistics as to how many unique and overall custom events were triggered. Unique and total events are calculated as in the Agent Bumps API. Due to the fact that custom events can have any set of values, custom events are further grouped by their particular value, in addition to the normal categorization options.
+The Custom Events API provides information about the number of unique and overall times that a custom event was triggered. A unique custom event is defined as whether a player triggered the custom event during gameplay. Further triggers of the custom event then count towards the overall count. Due to the fact that custom events can have any set of values, custom events are further grouped by their particular value, in addition to the normal categorization options.
 
 \paragraph{Raw Data}
 
