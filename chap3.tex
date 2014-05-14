@@ -11,7 +11,7 @@ The key purpose of TaleBlazer Analytics is to capture metrics about TaleBlazer g
 
 The Log Tab is a new tab in TaleBlazer Mobile that was developed specifically to lay the foundation for the development of the TA system. This tab contains a chronologically-sorted list of game events that players can view in order to get a high-level picture of the actions they have taken during a game. The Log Tab contains information such as when a particular agent was bumped and whether a player picked up certain items. 
 
-The purpose of the Log Tab was two-fold. First, it served as a way to identify game events that would be useful to collect as data. If a particular event was deemed necessary to go in the log, then that type of data was prioritized to collect. It also helped alert us to the kinds of data that were possible to collect. This helped us reach a feasible and grounded feature specification later on. Second, it served as a way to introduce players and game designers to the types of game events that we would later go on to track in TaleBlazer Analytics.
+The purpose of the Log Tab was three-fold. First, it allowed players to review their actions during a game, which was particularly useful for long games. Second, it served as a way to identify game events that would be useful to collect as data. If a particular event was deemed necessary to go in the log, then that type of data was prioritized to collect. It also helped alert us to the kinds of data that were possible to collect. This helped us reach a feasible and grounded feature specification later on. Second, it served as a way to introduce players and game designers to the types of game events that we would later go on to track in TaleBlazer Analytics.
 
 \subsection{User Stories}
 
@@ -41,12 +41,16 @@ With the user stories, we were able to determine exactly what kinds of data we w
 \subsubsection{Devices}
 \label{subsec:device}
 
-Device information was critical to capture in order to gather technical metrics and to be able to identify unique users. This information involved the OS and its version, the model of the device, and the screen resolution. Additionally, each device has a unique ID specific to TaleBlazer and cannot be traced back to the device or used to identify it for non-TaleBlazer purposes.
+Device information was critical to capture in order to gather technical metrics and to be able to identify unique users. This information involved the OS and its version, the model of the device, and the screen resolution. Additionally, each device has a unique ID specific to TaleBlazer and cannot be traced back to the device or used to identify it for non-TaleBlazer purposes. 
+
+For power users, device information can be used to analyze players' behaviors throughout multiple games. For TaleBlazer developers, this information can help prioritize development tasks and identify device-specific issues.
 
 \subsubsection{Sessions}
 \label{subsec:session}
 
-Sessions represent all the information about a single gameplay session. All events that take place within a game are tied to a particular session. Sessions consist of the time that the game was started and the time of the last event that occurred. They also contain information about the particular role and scenario chosen for that gameplay session and whether the tap-to-visit setting was enabled. Finally, the session is tied back to the particular version of the game being played and the device on which it was played.
+Sessions represent all the information about a single gameplay session. All events that take place within a game are tied to a particular session. Sessions consist of the time that the game was started and the time of the last event that occurred. They also contain information about the particular role and scenario chosen for that gameplay session and whether the tap-to-visit setting was enabled. Finally, the session is tied back to the particular version of the game being played and the device on which it was played. 
+
+In general, sessions provide the basis for all analytics data, as they can be used to determine information from the number of overall players to the sequence of actions that a player took during a gameplay session.
 
 \subsubsection{Agent Bump Event}
 
@@ -59,15 +63,17 @@ An agent bump event occurs when the player ``bumps'' into an agent, via a variet
 		\item being accessed from the inventory
 	\end{itemize}
 
-Each agent bump event records the name and unique ID of the particular agent that was bumped. It also details how the agent was bumped and the session that the event took place in.
+Each agent bump event records the name and unique ID of the particular agent that was bumped. It also details how the agent was bumped and the session that the event took place in. 
+
+Agent bumps can be used to identify information such as the number of unique times that an agent was bumped and how far a player made it into the game. 
 
 \subsubsection{Region Switch Event}
 
-A region switch event occurs when the player moves from one game region to another, triggered by a ``Move To Region'' block. Each region switch event records the name and unique ID of the region, as well as its corresponding session.
+A region switch event occurs when the player moves from one game region to another, triggered by a ``Move To Region'' block. Each region switch event records the name and unique ID of the region, as well as its corresponding session. With this data, region switch events can be used to determine information such as the number of players that reached a certain point in a game.
 
 \subsubsection{Game Completion Event}
 
-Game completion events record when a particular game was completed. Prior to TaleBlazer Analytics, TaleBlazer games did not have a fixed concept of the end of a game. In order to track this data, a new block was added to the game editor called the ``End Game'' block. The sole purpose of this block is to mark the end of a game from an analytics standpoint. Game designers can use this block to mark a point after which they do not want to continue tracking events for that session. Naturally, each game completion is tied to a session. 
+Game completion events record when a particular game was completed. Prior to TaleBlazer Analytics, TaleBlazer games did not have a fixed concept of the end of a game. In order to track this data, a new block was added to the game editor called the ``End Game'' block. The sole purpose of this block is to mark the end of a game from an analytics standpoint. Game designers can use this block to mark a point after which they do not want to continue tracking events for that session. For example, a game might allow players to replay the game, which the game designer might not wish to track events for. Each game completion is tied to a session. 
 
 \subsubsection{Custom Events}
 
