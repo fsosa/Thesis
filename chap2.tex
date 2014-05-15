@@ -5,7 +5,7 @@ This chapter gives a background on the TaleBlazer project, including its separat
 
 \section{TaleBlazer}
 
-TaleBlazer is an augmented reality location-based game platform developed at the MIT Scheller Teacher Education Program (STEP). TaleBlazer is a platform in the true sense in that it is composed of multiple technologies which all come together to produce the TaleBlazer experience. At its core, TaleBlazer lets users create their own games that take place in the real world, using a web-based game editor. Users can then choose to publish their games to the world at large. Using the Android or iOS TaleBlazer mobile application, players play TaleBlazer games by downloading the game and physically walking around in the real-world location that the game takes place in. Players interact with with virtual game agents: user-scripted  entities that are placed by the game designer at specific GPS coordinates.
+TaleBlazer is an augmented reality location-based game platform developed at the MIT Scheller Teacher Education Program (STEP). TaleBlazer is a platform in the true sense in that it is composed of multiple technologies which all come together to produce the TaleBlazer experience. At its core, TaleBlazer lets users create their own games that take place in the real world, using a web-based game editor. Users can then choose to publish their games to the world at large. Using the Android or iOS TaleBlazer mobile application, players play TaleBlazer games by downloading the game and physically walking around in the real-world location that the game takes place in. Players interact with virtual game agents: user-scripted entities that are placed by the game designer at specific GPS coordinates.
 
 \subsection{Overview of a TaleBlazer Game}
 
@@ -21,7 +21,7 @@ A typical TaleBlazer game consists of the following parts:
 
 \subsubsection{Regions}
 
-Regions are real-world locations where TaleBlazer games take place. Using the game editor, game designers define their game regions by selecting an area of a Google map. Regions define the area where in-game virtual entities, called agents, can be placed. Games can have one or more regions, each with their own name. The game designer also has the option of moving the player or agents from one region to another during the course of game using TaleBalzer's programming language. In order to play a TaleBlazer game, a player goes to the real-world location with their mobile device and moves around the region to activate or ``bump'' into the agents placed at nearby locations. 
+Regions are real-world locations where TaleBlazer games take place. Using the game editor, game designers define their game regions by selecting an area of a Google map. Regions define the area where in-game virtual entities, called agents, can be placed. Games can have one or more regions, each with their own name. The game designer also has the option of moving the player or agents from one region to another during the course of game using TaleBlazer's programming language. In order to play a TaleBlazer game, a player goes to the real-world location with their mobile device and moves around the region to activate or ``bump'' into the agents placed at nearby locations. 
 
 \subsubsection{Roles}
 
@@ -66,7 +66,7 @@ The TaleBlazer platform is comprised of four main parts:
  	\end{itemize}
 
 \subsubsection{Game Editor}
-The game editor is an online web application which lets users create their own TaleBlazer games through the use of ScriptBlocks. Using the editor, users add and configure their game regions, create agents, roles and scenarios, and program the game by composing scripts. Users can save their games, which are then stored on TaleBlazer Server. The game editor also provides options for modifying the game interface that players see when playing a game on their mobile device. The game editor is written in JavaScript. 
+The game editor is an online web application that lets users create their own TaleBlazer games through the use of ScriptBlocks. Using the editor, users add and configure their game regions, create agents, roles and scenarios, and program the game by composing scripts. Users can save their games, which are then stored on TaleBlazer Server. The game editor also provides options for modifying the game interface that players see when playing a game on their mobile device. The game editor is written in JavaScript. 
 
 \subsubsection{TaleBlazer Mobile}
 
@@ -87,11 +87,11 @@ TaleBlazer Mobile is written using Appcelerator Titanium, an SDK that lets devel
 
 \subsubsection{TaleBlazer Server}
 
-TaleBlazer Server is the main repository server which handles user accounts, hosts the game editor, and stores and serves TaleBlazer games and game-related files (e.g. images, video). TaleBlazer Server is written in PHP using the CakePHP framework and backed by a MySQL database. 
+TaleBlazer Server is the main repository server, which handles user accounts, hosts the game editor, and stores and serves TaleBlazer games and game-related files (e.g. images, video). TaleBlazer Server is written in PHP using the CakePHP framework and backed by a MySQL database. 
 
 \subsubsection{TaleBlazer Multiplayer}
 
-TaleBlazer Multiplayer is a separate server which provides multiplayer functionality for TaleBlazer games. It implements a separate protocol which synchronizes the state of the world between all devices playing a multiplayer game. The server is written in Node.js, using JavaScript.
+TaleBlazer Multiplayer is a separate server that provides multiplayer functionality for TaleBlazer games. It implements a separate protocol that synchronizes the state of the world between all devices playing a multiplayer game. The server is written in Node.js, using JavaScript.
 
 \subsection{Past Projects}
 
@@ -149,7 +149,7 @@ The user-generated nature of TaleBlazer games results in games that span a huge 
 
 With the public release of TaleBlazer, it was necessary to automate the collection of data from all gameplay sessions. Previously, all TaleBlazer games were played in a moderated setting, in which adult facilitators would guide gameplay, troubleshoot, and see how the game was being played in real-time. This approach is infeasible when groups are unmoderated or large. As a result, it was necessary to develop an automated system for collecting gameplay data for all sessions.
 
-The previous method for collecting gameplay data involved observing players as they played. Although this approach yielded (and continues to yield) important data regarding players' dialogues and moods, it had two downsides. First, it resulted in an incomplete picture of an entire group's gameplay sessions as the number of players that could be observed was limited to the number of facilitators present. Second, it interfered with gameplay. Players tended to act completely differently when being observed than when left to their own devices, resulting in skewed data. As such, an automated system was nececessary in order to gather quantitative data about all gameplay sessions without interrupting players and to complement existing manual observation methods.
+The previous method for collecting gameplay data involved observing players as they played. Although this approach yielded (and continues to yield) important data regarding players' dialogues and moods, it had two downsides. First, it resulted in an incomplete picture of an entire group's gameplay sessions, as the number of players that could be observed was limited to the number of facilitators present. Second, it interfered with gameplay. Players tended to act completely differently when being observed than when left to their own devices, resulting in skewed data. As such, an automated system was necessary in order to gather quantitative data about all gameplay sessions without interrupting players and to complement existing manual observation methods.
 
 \subsubsection{Relevant Analytics and Privacy}
 
