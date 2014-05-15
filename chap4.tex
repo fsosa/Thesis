@@ -30,7 +30,7 @@ Strict development methodologies were adopted to ensure that the server is easil
 
 \subsection{Server Structure}
 
-A crucial step in developing the analytics server was deciding on the best way to structure the server. The main goal was to reach an optimum level of component decoupling, which would allow features to be easily implemented and modified without affecting unrelated parts of the application. To this end, the Express web application framework was used to provide the high-level web-oriented functionality, such as routing and HTTP request handling. The application is split up into models, views, and controller, which separates code according to their functionality. 
+A crucial step in developing the analytics server was deciding on the best way to structure the server. The main goal was to reach an optimum level of component decoupling, which would allow features to be easily implemented and modified without affecting unrelated parts of the application. To this end, the Express web application framework was used to provide the high-level web-oriented functionality, such as routing and HTTP request handling. The application is split up into models, views, and controller, which separate code according to their functionality. 
 
 \subsubsection{Express}
 Express is a light Node framework for building web applications. It is built on top of the low-level Node.js HTTP module and provides a high-level API for handling all interactions having to do with HTTP requests. At its core, Express provides simple ways of routing URLs, parsing HTTP requests, sending HTTP responses, and defining paths for request processing via middleware. Defining what code to execute based on a request to a URL (i.e. routing) is simple using Express.
@@ -238,9 +238,9 @@ Logging functionality was implemented into the server in order to simplify troub
 
 \subsubsection{Deployment alongside TaleBlazer Server}
 
-The TaleBlazer Analytics server was deployed on the same machines as the existing TaleBlazer server. Early testing with our partners indicated that certain networks would restrict access via HTTP to sites on ports other than port 80. As a result, it was necessary to find a way to deploy TaleBlazer Server and the analytics server alongside each other and have both servers respond to requests at port 80. Navigationx was deployed as a reverse proxy server to accomplish this. 
+The TaleBlazer Analytics server was deployed on the same machines as the existing TaleBlazer server. Early testing with our partners indicated that certain networks would restrict access via HTTP to sites on ports other than port 80. As a result, it was necessary to find a way to deploy TaleBlazer Server and the analytics server alongside each other and have both servers respond to requests at port 80. Nginx was deployed as a reverse proxy server to accomplish this. 
 
-Nginx is a high-performance HTTP server which is often used as a reverse proxy or load-balancer in front of other servers. A reverse proxy server is a server which retrieves information from other servers on behalf of a client making a request. In our particular case, Nginx allows TaleBlazer Server and the analytics server to both respond to requests on port 80. It accomplishes this by performing requests to the respective server on behalf of the original client and then serving the request. Fitting with the goals of the project, Nginx is also easily deployed and configured. To ease future deployment, the configuration and deployment process was extensively documented.
+Nginx is a high-performance HTTP server which is often used as a reverse proxy or load-balancer in front of other servers. A reverse proxy server is a server that retrieves information from other servers on behalf of a client making a request. In our particular case, Nginx allows TaleBlazer Server and the analytics server to both respond to requests on port 80. It accomplishes this by performing requests to the respective server on behalf of the original client and then serving the request. Fitting with the goals of the project, Nginx is also easily deployed and configured. To ease future deployment, the configuration and deployment process was extensively documented.
 
 \section{TaleBlazer Analytics Client}
 
@@ -287,7 +287,7 @@ Events are persisted locally in order to persist through application and device 
 
 \section{TaleBlazer Analytics Site}
 
-This sections details the structure of the analytics site and its features. It also provides examples of the user interface. 
+This section details the structure of the analytics site and its features. It also provides examples of the user interface. 
 
 \subsection{Technical Overview}
 
